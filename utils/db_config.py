@@ -6,7 +6,7 @@ mongo_ip = "localhost"
 if "MONGO_IP" in os.environ:
     mongo_ip = os.environ['MONGO_IP']
 db_connect_string = "mongodb://{}:27017".format(mongo_ip)
-db_name = "dippy"
+db_name = "PCPT"
 if "MONGO_INITDB_DATABASE" in os.environ:
     db_name = os.environ['MONGO_INITDB_DATABASE']
 print("Connecting to {}".format(db_connect_string))

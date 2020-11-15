@@ -20,7 +20,7 @@ def add_to_mongo():
 
 @mod.route("/api/mongo")
 def get_from_mongo():
-    db_items = db["test"].find({})
+    db_items = db["test"].find({"_id": "7b"})
     items = []
     for item in db_items:
         items.append(item)

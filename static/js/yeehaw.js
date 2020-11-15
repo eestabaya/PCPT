@@ -7,8 +7,10 @@ $(document).ready(function () {
         },
         dataType: "json",
         contentType: "application/json;charset=utf-8",
+
         success: function (data) {
             let success = data.success;
+
             if (success) {
                 let items = data["items"]
                 const _something = $("#something")
@@ -18,5 +20,6 @@ $(document).ready(function () {
             }
 
         }
+
     });
 })
