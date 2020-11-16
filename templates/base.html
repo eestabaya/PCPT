@@ -1,11 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Title{% endblock %}</title>
+    <title>{% block title %}Sample Text{% endblock %}</title>
     {% include "libraries.html" %}
 </head>
+
 <body>
-{% block content %}{% endblock %}
+    <input type="checkbox" id="chk">
+        <label for="chk" class="show-menu menuBtn type1">
+            <span></span>
+        </label>
+      <div class="menu">
+          <a href="/">home</a>
+          <a href="#">about</a>
+          <a href="#">browse</a>
+      </div>
+
+    <div class="wrapper" style="transition: 0.7s;">
+        <div class="searchBar">
+            <a href="/" style="text-decoration:none">
+                <span><i class="fa fa-search fa-2x" style="color:#ffeded;margin-left:20px;width:auto;margin-top:10px;"></i></span>
+            </a>
+            <input id="field" type="text" placeholder="Type in a product here!">
+        </div>
+
+        {% block content %}
+            <div>
+                <h1>Welcome to PCPT</h1>
+                <p>under construnction lmao</p>
+            </div>
+        {% endblock %}
+
+    </div>
+
+    <script>
+        $('.menuBtn').on('click', function(){
+            $(this).toggleClass('close');
+        });
+    </script>
+
 </body>
 </html>
