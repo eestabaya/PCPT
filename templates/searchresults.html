@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Results{% endblock %}
+
+{% block content %}
+<div id="something"></div>
+<br/>
+
+{% if var %}
+<div class="container">
+    <div class="row">
+        {{ var.x }}<br/>
+        {{ var.y }}<br/>
+        {% for item in var.z %}
+        {{ item }}<br/>
+        {% endfor %}
+    </div>
+</div>
+<!--- <script src="/js/request.js"></script> --->
+{% endif %}
+
+{% endblock %}
