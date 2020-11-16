@@ -9,16 +9,19 @@
 
 <body>
     <input type="checkbox" id="chk">
-        <label for="chk" class="show-menu menuBtn type1">
-            <span></span>
-        </label>
-      <div class="menu">
-          <a href="/">home</a>
-          <a href="#">about</a>
-          <a href="#">browse</a>
-      </div>
+
+    <label for="chk" class="show-menu menuBtn type1">
+        <span></span>
+    </label>
+
+    <div class="menu">
+        <a href="/">Home</a>
+        <a href="#">About</a>
+        <a href="#">Browse</a>
+    </div>
 
     <div class="wrapper" style="transition: 0.7s;">
+
         <div class="searchBar">
             <a href="/" style="text-decoration:none">
                 <span><i class="fa fa-search fa-2x" style="color:#ffeded;margin-left:20px;width:auto;margin-top:10px;"></i></span>
@@ -35,11 +38,7 @@
 
     </div>
 
-    <script>
-        $('.menuBtn').on('click', function(){
-            $(this).toggleClass('close');
-        });
-    </script>
+    <script src="/js/menuButton.js"></script>
 
 </body>
 </html>
