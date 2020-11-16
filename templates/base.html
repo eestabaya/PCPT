@@ -23,10 +23,14 @@
     <div class="wrapper" style="transition: 0.7s;">
 
         <div class="searchBar">
-            <a href="/" style="text-decoration:none">
-                <span><i class="fa fa-search fa-2x" style="color:#ffeded;margin-left:20px;width:auto;margin-top:10px;"></i></span>
-            </a>
-            <input id="field" type="text" placeholder="Type in a product here!">
+
+            <form action="/search" method="post">
+                <input type="submit" style="text-decoration:none">
+                    <span><i class="fa fa-search fa-2x" style="color:#ffeded;margin-left:20px;width:auto;margin-top:10px;"></i></span>
+                <input id="field" type="text" name="query" placeholder="Type in a product here!">
+                <!-- <input type="submit" value="subimt"> -->
+            </form>
+
         </div>
 
         {% block content %}
