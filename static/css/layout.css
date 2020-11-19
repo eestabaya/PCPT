@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Archivo|Lato|Spectral&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Spectral&display=swap");
+
 body{
   background-color: #ffeded;
 }
@@ -30,9 +33,6 @@ body{
   font-family: "'Roboto";
   font-size:1.2vw;
 }
-
-@import url('https://fonts.googleapis.com/css?family=Archivo|Lato|Spectral&display=swap');
-@import url("https://fonts.googleapis.com/css?family=Spectral&display=swap");
 
 body {
     margin:0;

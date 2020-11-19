@@ -13,6 +13,7 @@ $(document).ready(function () {
 
             if (success) {
                 let items = data["items"]
+
                 const _something = $("#something")
                 items.forEach(function(item){
                     _something.append("<b>" + item["_id"] + "</b><br />")

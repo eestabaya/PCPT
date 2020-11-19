@@ -1,7 +1,7 @@
 import uuid
 
 import flask
-from flask import Flask
+from flask import Flask, render_template
 from flask_wtf import CsrfProtect
 
 from views import home, results
@@ -25,7 +25,12 @@ CsrfProtect(app)
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return "Not found dummy", 404
+    return render_template("error.html"), 404
+
+
+@app.route('/templates/<path:path>', methods=['GET'])
+def views(path):
+    return flask.send_from_directory("templates", path)
 
 
 @app.route('/js/<path:path>', methods=['GET'])

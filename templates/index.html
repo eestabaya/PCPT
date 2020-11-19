@@ -2,20 +2,20 @@
 {% block title %}YEET{% endblock %}
 
 {% block content %}
-<div id="something"></div>
-<br/>
+    <div id="something"></div>
+    <br/>
 
-{% if var %}
-<div class="container">
-    <div class="row">
-        {{ var.x }}<br/>
-        {{ var.y }}<br/>
-        {% for item in var.z %}
-        {{ item }}<br/>
-        {% endfor %}
-    </div>
-</div>
-<script src="/js/request.js"></script>
-{% endif %}
+    {% if var %}
+        <div class="container">
+            <div class="row">
+                {{ var.x }}<br/>
+                {{ var.y }}<br/>
+                {% for item in var.z %}
+                    {{ item }}<br/>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
 
+    <script src="/static/js/request.js"></script>
 {% endblock %}

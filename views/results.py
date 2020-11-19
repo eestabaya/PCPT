@@ -6,7 +6,7 @@ mod = Blueprint("view_results", __name__)
 @mod.route("/search", methods=["POST"])
 def process_results():
 
-    #TODO this doesnt work
+    # TODO this doesnt work
     if request.method != "POST":
         return render_template("searchresults.html")
 
@@ -20,4 +20,4 @@ def process_results():
         "y": "string",
         "z": ["this", "is", "a", "list"]
     }
-    return render_template("searchresults.html", var=stuff)
+    return render_template("searchresults.html", var=search)
