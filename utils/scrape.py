@@ -1,11 +1,11 @@
 #
 # Code by Colin Lemarchand
 #
-
 from random import choice
 
 import bs4
 import requests
+
 
 desktop_agents = [
     'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
@@ -22,6 +22,7 @@ desktop_agents = [
 
 def random_headers():
     return {'User-Agent': choice(desktop_agents),
+            'referrer': 'https://google.com',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'}
 
 
@@ -34,6 +35,9 @@ def extract_source(url):
 def extract_adorama_num_results(source):
     """given a page's html source, returns the number of products in the page's category"""
     soup = bs4.BeautifulSoup(source, 'lxml')
+    if str(soup.find_all("title")[0].contents[0]).strip() == "Access to this page has been denied.":
+        print("Captcha block detected! Scrape failed.")
+        return 0
     num_products = int(soup.find_all(class_="index-count-total")[0].contents[0])
     return num_products
 
@@ -45,19 +49,25 @@ def extract_adorama_page(source):
     part_num_to_data = {}
 
     soup = bs4.BeautifulSoup(source, 'lxml')
+    if str(soup.find_all("title")[0].contents[0]).strip() == "Access to this page has been denied.":
+        print("Captcha block detected! Scrape failed.")
+        return {}
     products_tab = soup.find_all(class_="item-list")[0].contents
+    part_num_to_data = {}
     for item in products_tab:
         if type(item) == bs4.element.Tag and item.get('class') == ['item']:
             part_num = None
+            part_price = None
             for elem in item.contents:
                 if type(elem) == bs4.element.Tag and elem.get('class') == ['item-details']:
                     part_num = elem.contents[len(elem.contents) - 2].contents[3].contents[1].contents[0]
 
                 elif type(elem) == bs4.element.Tag and elem.get('class') == ['item-actions']:
-                    part_price = elem.contents[1].contents[5].get('value')
-
-                    if part_price is None:
-                        part_price = elem.contents[1].contents[7].get('value')
+                    for x in elem.contents:
+                        if type(x) == bs4.element.Tag and x.get('class') == ['prices']:
+                            for y in x.contents:
+                                if type(y) == bs4.element.Tag and y.get('id') == 'FinalPrice':
+                                    part_price = y.get('value')
 
                     part_num_to_data[part_num] = part_price
                     # print(str(part_num) + ":" + str(part_price))
@@ -65,21 +75,31 @@ def extract_adorama_page(source):
     return part_num_to_data
 
 
-def scrape_adorama_category(category_url, category_name):
+def scrape_adorama_category(category_url):
     """given an adorama category's url and name, writes the price data for each product in the category to a file
     named <category_name>.txt """
 
     num_products = extract_adorama_num_results(extract_source(category_url))
     part_num_to_data = {}
-
     for i in range(0, num_products, 15):
-        part_num_to_data[i] = extract_adorama_page(extract_source(category_url + "?startAt=" + str(i)))
-    # file = open(f"../scrapes/{category_name}.txt", 'w')
-    # file.write(str(pair) + "\n") for pair in part_num_to_data.items()]
+        page_data = extract_adorama_page(extract_source(category_url + "?startAt=" + str(i)))
+        part_num_to_data.update(page_data)
     return part_num_to_data
 
 
-scr = scrape_adorama_category("https://www.adorama.com/l/Computers/Computer-Components/Video-and-Graphics-Cards",
-                        "adorama_gpu")
-# scrape_adorama_category("https://www.adorama.com/l/Computers/Computer-Components/Computer-Memory-lrbr-RAM-rrbr", "adorama_ram")
-
+adorama_gpu = scrape_adorama_category("https://www.adorama.com/l/Computers/Computer-Components/Video-and-Graphics-Cards")
+print(adorama_gpu)
+adorama_ram = scrape_adorama_category("https://www.adorama.com/l/Computers/Computer-Components/Computer-Memory-lrbr-RAM-rrbr")
+print(adorama_ram)
+adorama_ssd = scrape_adorama_category("https://www.adorama.com/l/Computers/Drives-comma-SSD-and-Storage/Internal-SSD-Drives")
+print(adorama_ssd)
+adorama_hdd = scrape_adorama_category("https://www.adorama.com/l/Computers/Drives-comma-SSD-and-Storage/Hard-Disk-Drives")
+print(adorama_hdd)
+adorama_mobo = scrape_adorama_category("https://www.adorama.com/l/Computers/Computer-Components/Motherboard-Interfaces")
+print(adorama_mobo)
+adorama_psu = scrape_adorama_category("https://www.adorama.com/l/Computers/Computer-Components/Desktop-Power-Supplies")
+print(adorama_psu)
+adorama_cpu = scrape_adorama_category("https://www.adorama.com/l/Computers/Computer-Components/CPU-Processors")
+print(adorama_cpu)
+adorama_case = scrape_adorama_category("https://www.adorama.com/l/Computers/Computer-Tower-Cases")
+print(adorama_case)
