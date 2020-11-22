@@ -7,8 +7,6 @@ from random import choice
 import bs4
 import requests
 
-part_num_to_data = {}
-
 desktop_agents = [
     'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
     'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
@@ -43,6 +41,9 @@ def extract_adorama_num_results(source):
 def extract_adorama_page(source):
     """ given a page's html source, adds all products in the page's category to externally defined dictionary,
     with format { part # : price } """
+
+    part_num_to_data = {}
+
     soup = bs4.BeautifulSoup(source, 'lxml')
     products_tab = soup.find_all(class_="item-list")[0].contents
     for item in products_tab:
@@ -59,17 +60,22 @@ def extract_adorama_page(source):
                         part_price = elem.contents[1].contents[7].get('value')
 
                     part_num_to_data[part_num] = part_price
-                    print(str(part_num) + ":" + str(part_price))
+                    # print(str(part_num) + ":" + str(part_price))
+
+    return part_num_to_data
 
 
 def scrape_adorama_category(category_url, category_name):
     """given an adorama category's url and name, writes the price data for each product in the category to a file
     named <category_name>.txt """
+
     num_products = extract_adorama_num_results(extract_source(category_url))
+    part_num_to_data = {}
+
     for i in range(0, num_products, 15):
-        extract_adorama_page(extract_source(category_url + "?startAt=" + str(i)))
-    #file = open(f"../scrapes/{category_name}.txt", 'w')
-    #[file.write(str(pair) + "\n") for pair in part_num_to_data.items()]
+        part_num_to_data[i] = extract_adorama_page(extract_source(category_url + "?startAt=" + str(i)))
+    # file = open(f"../scrapes/{category_name}.txt", 'w')
+    # file.write(str(pair) + "\n") for pair in part_num_to_data.items()]
     return part_num_to_data
 
 

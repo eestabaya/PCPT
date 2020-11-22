@@ -33,4 +33,4 @@ def get_from_scrape():
     #items = []
     #for item in scr:
         #items.append(item)
-    return {"success": True, "items": str(scr)}
+    return {"success": True, "items": scr}
