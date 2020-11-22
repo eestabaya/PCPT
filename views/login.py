@@ -62,7 +62,7 @@ class User:
         return render_template('login.html', title='Sign In', form=form)
 
 
-    @app.route('/logout')
+    @mod.route('/logout')
     def logout(self):
         logout_user()
         return redirect(url_for('login'))
