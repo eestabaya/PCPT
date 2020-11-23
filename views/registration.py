@@ -7,6 +7,6 @@ mod = Blueprint("view_registration", __name__)
 
 def view_registration_page():
 
-    # TODO comparison logic
+    # TODO registration logic
 
     return render_template("registration.html")
