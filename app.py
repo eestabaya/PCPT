@@ -4,7 +4,7 @@ import flask
 from flask import Flask, render_template
 from flask_wtf import CsrfProtect
 
-from views import home, results, sys_config
+from views import home, results, sys_config, comparison, registration, password, product
 
 from api import api
 
@@ -15,7 +15,11 @@ registers = [
     home.mod,
     api.mod,
     results.mod,
-    sys_config.mod
+    sys_config.mod,
+    comparison.mod,
+    registration.mod,
+    password.mod,
+    product.mod
 ]
 
 for registration in registers:
