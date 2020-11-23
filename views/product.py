@@ -7,6 +7,6 @@ mod = Blueprint("view_product_page", __name__)
 
 def view_product_page():
 
-    # TODO comparison logic
+    # TODO product page logic
 
     return render_template("product.html")
