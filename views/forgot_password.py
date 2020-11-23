@@ -7,6 +7,6 @@ mod = Blueprint("view_password", __name__)
 
 def view_forgot_password_page():
 
-    # TODO comparison logic
+    # TODO forgot password logic
 
     return render_template("password.html")
