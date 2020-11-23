@@ -20,4 +20,32 @@ def process_results():
     # TODO - if jquery is handled in python then this will be called every time, maybe keep it to js still?
     # pros - maybe it's easier? or is js easier?
 
-    return render_template("searchresults.html", var=items)
+    # another alternative, do js payload and read data from there? then jquery handles the rest
+
+    print(items)
+    for x in items['items']:
+        print(x)
+
+    # TODO PLACEHOLDER STUFF MOCK TEST OF SEARCH
+    temp = {
+        "stuff1": {
+            "lmao": "zedong",
+            "lmfao": "pepega"
+        },
+        "stuff2": {
+            "pepe": "the frog",
+            "this is": "a test?"
+        },
+        "gg": {
+            "good game": "not"
+        },
+        "no re": {
+            "hehe": "xd"
+        },
+    }
+
+    # TODO here are some notes
+        # take data, let results = {{ template }} <-- i honestly have no idea how to run this
+        # load and json stuff up, jquery gets handled from there
+    print(list(temp.keys()))
+    return render_template("searchresults.html", var=list(temp.keys()), e="stuff")

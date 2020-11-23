@@ -5,13 +5,27 @@
 <div id="something"></div>
 <br/>
 
-{% if var %}
+<p id="exd"></p>
 
-     {% for item in var %}
-         {{ item["_id"] }}<br/>
-     {% endfor %}
+{% if var and e %}
+    <b>bigger test</b>
+    <script>
+        $(document).ready(function() {
+            console.log("zzsuper");
+            let myLoad = {{ var|tojson }};
+            let ez = {{ e|tojson }};
+            console.log(myLoad);
+
+            let f = myLoad.filter(q => q.includes(ez));
+
+            document.getElementById("exd").innerHTML = f;
+        });
+
+        // insert jQuery here!
+    </script>
 
     <!--- <script src="/static/js/filterResults.js"></script> --->
 {% endif %}
+<b>big test</b>
 
 {% endblock %}
