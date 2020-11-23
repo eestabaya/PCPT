@@ -3,9 +3,17 @@ import uuid
 from flask import Blueprint
 
 from utils.db_config import db
-from utils.scrape import scr
+# from utils.scrape import scr
 
 mod = Blueprint("api_stuff", __name__)
+
+
+def get_from_mongo():
+    db_items = db["test"].find({})
+    items = []
+    for item in db_items:
+        items.append(item)
+    return items
 
 
 @mod.route("/api/<uid>")
@@ -20,11 +28,8 @@ def add_to_mongo():
 
 
 @mod.route("/api/mongo")
-def get_from_mongo():
-    db_items = db["test"].find({})
-    items = []
-    for item in db_items:
-        items.append(item)
+def mongo_route():
+    items = get_from_mongo()
     return {"success": True, "items": items}
 
 
@@ -33,4 +38,4 @@ def get_from_scrape():
     #items = []
     #for item in scr:
         #items.append(item)
-    return {"success": True, "items": scr}
+    return {"success": True, "items": "yes"}

@@ -5,27 +5,13 @@
 <div id="something"></div>
 <br/>
 
-{% if dum %}
-<div class="container">
-    <div class="row">
-        {{ dum.x }}<br/>
-        {{ dum.y }}<br/>
-        {% for item in dum.z %}
-        {{ item }}<br/>
-        {% endfor %}
-    </div>
-</div>
-<!--- <script src="/js/request.js"></script> --->
-{% endif %}
-
 {% if var %}
-    <div class="container">
-    <div class="row">
-        {{ var }}<br/>
-    </div>
-        var
-    <script src="/static/js/filterResults.js"></script>
-</div>
+
+     {% for item in var %}
+         {{ item["_id"] }}<br/>
+     {% endfor %}
+
+    <!--- <script src="/static/js/filterResults.js"></script> --->
 {% endif %}
 
 {% endblock %}

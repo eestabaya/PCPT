@@ -4,7 +4,7 @@ import flask
 from flask import Flask, render_template
 from flask_wtf import CsrfProtect
 
-from views import home, results
+from views import home, results, sys_config
 
 from api import api
 
@@ -14,7 +14,8 @@ app.secret_key = str(uuid.uuid4())
 registers = [
     home.mod,
     api.mod,
-    results.mod
+    results.mod,
+    sys_config.mod
 ]
 
 for registration in registers:

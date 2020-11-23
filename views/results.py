@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request
+from api.api import get_from_mongo
 
 mod = Blueprint("view_results", __name__)
 
@@ -10,14 +11,13 @@ def process_results():
     if request.method != "POST":
         return render_template("searchresults.html")
 
-    search = request.form['query']
+    query = request.form['query']
 
-    if search is "" or search.isspace():
+    if query is "" or query.isspace():
         return render_template("searchresults.html")
 
-    stuff = {
-        "x": search,
-        "y": "string",
-        "z": ["this", "is", "a", "list"]
-    }
-    return render_template("searchresults.html", var=search)
+    items = get_from_mongo()
+    # TODO - if jquery is handled in python then this will be called every time, maybe keep it to js still?
+    # pros - maybe it's easier? or is js easier?
+
+    return render_template("searchresults.html", var=items)
