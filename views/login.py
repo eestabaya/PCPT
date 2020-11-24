@@ -1,7 +1,8 @@
 from flask import render_template, Blueprint, flash, redirect
-from PCPT.views.forms import LoginForm
+from .forms import LoginForm
 # ...
 mod = Blueprint("login", __name__)
+
 
 @mod.route('/login', methods=['GET', 'POST '])
 def login():
