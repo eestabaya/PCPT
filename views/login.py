@@ -1,9 +1,10 @@
 from flask import render_template, Blueprint, flash, redirect
-from views.forms import LoginForm
+from .forms import LoginForm
 # ...
 mod = Blueprint("login", __name__)
 
-@mod.route('/login', methods=['GET', 'POST '])
+
+@mod.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():

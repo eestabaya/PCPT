@@ -4,9 +4,9 @@ import flask
 from flask import Flask, render_template
 from flask_wtf import CsrfProtect
 
-from PCPT.views import home, results, sys_config, comparison, registration, product, login
+from views import home, results, sys_config, comparison, registration, product, login
 
-from PCPT.api import api
+from api import api
 
 app = Flask(__name__)
 app.secret_key = str(uuid.uuid4())
@@ -18,8 +18,8 @@ registers = [
     sys_config.mod,
     comparison.mod,
     registration.mod,
-    # password.mod,
-    product.mod
+    product.mod,
+    login.mod
 ]
 
 for registration in registers:
