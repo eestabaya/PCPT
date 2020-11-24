@@ -12,11 +12,14 @@
             <p>
                 {{ form.password.label }}<br>
                 {{ form.password(size=32) }}
-                <a id="forgotPass" href="/password">Forgot Password?</a>
+                <a id="forgotPass" href="/forgot_password">Forgot Password?</a>
             </p>
             <br>
             <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
             <p>{{ form.submit() }}</p>
+            <a id="registerLink" href="/register">
+                Register New Account
+            </a>
         </form>
     </div>
     <style>
@@ -54,7 +57,7 @@
         background: #ffeded;
     }
 
-    #forgotPass{
+    #forgotPass, #registerLink{
         color: blue;
         text-decoration: underline;
     }
