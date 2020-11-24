@@ -1,5 +1,5 @@
 from flask import render_template, Blueprint, flash, redirect
-from views.forms import LoginForm
+from forms import LoginForm
 # ...
 mod = Blueprint("login", __name__)
 
