@@ -1,18 +1,96 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Sign In</h1>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}
-        </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.submit() }}</p>
-    </form>
+    <div class="login-module">
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}        
+            <h1>Account Login</h1>
+            <p>
+                {{ form.username.label }}<br>
+                {{ form.username(size=32) }}
+            </p>
+            <p>
+                {{ form.password.label }}<br>
+                {{ form.password(size=32) }}
+                <a id="forgotPass" href="/password">Forgot Password?</a>
+            </p>
+            <br>
+            <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+            <p>{{ form.submit() }}</p>
+        </form>
+    </div>
+    <style>
+    
+    .login-module{
+        background-color: #ffadad;
+        height: 460px;
+        width: 430px;
+        border-radius: 50px;
+        margin:auto;
+        margin-top: 100px;
+        font-family: DM Mono;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 42px;
+        text-align: center;
+        padding:25px;
+        justify-content: center;
+        color: #000000;
+    }
+
+    p{
+        height: 100px;
+        width:80%;
+        text-align: left;
+        margin: auto;
+    }
+
+    #password,#username{
+        height:40px;
+        border-radius: 10px;
+        width:100%;
+        border:none;
+        background: #ffeded;
+    }
+
+    #forgotPass{
+        color: blue;
+        text-decoration: underline;
+    }
+
+    #remember_me{
+        height:20px;
+        width: 20px;
+        border-radius: 5px;
+    }
+
+    label[for=remember_me]{
+        position:absolute;
+        margin-top:-5px;   
+        margin-left:5px;   
+    }
+
+    #submit{  
+        position:relative;
+        width: 100%;
+        height: 60px;
+        left: 0px;
+        top:-40px;
+        border:none;
+        font-family: DM Mono;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 42px;
+        text-align: center;
+        justify-content: center;
+        color: #000000;
+
+        /* Accent */
+
+        background: #FFEDED;
+        border-radius: 50px;
+    }
+    </style>
 {% endblock %}
