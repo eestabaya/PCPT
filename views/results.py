@@ -28,24 +28,26 @@ def process_results():
 
     # TODO PLACEHOLDER STUFF MOCK TEST OF SEARCH
     temp = {
-        "stuff1": {
+        "part1": {
             "lmao": "zedong",
             "lmfao": "pepega"
         },
-        "stuff2": {
+        "part2": {
             "pepe": "the frog",
             "this is": "a test?"
         },
-        "gg": {
+        "another p": {
             "good game": "not"
         },
-        "no re": {
+        "yes": {
             "hehe": "xd"
         },
     }
+
+
 
     # TODO here are some notes
         # take data, let results = {{ template }} <-- i honestly have no idea how to run this
         # load and json stuff up, jquery gets handled from there
     print(list(temp.keys()))
-    return render_template("searchresults.html", var=list(temp.keys()), e="stuff")
+    return render_template("searchresults.html", var=list(temp.keys()), e=query)
