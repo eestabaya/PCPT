@@ -18,8 +18,8 @@ registers = [
     sys_config.mod,
     comparison.mod,
     registration.mod,
-    product.mod,
-    login.mod
+    # password.mod,
+    product.mod
 ]
 
 for registration in registers:

@@ -28,26 +28,25 @@
 
             <form action="/search" method="post">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                <input type="submit" style="text-decoration:none">
+                <input type="submit" style="display: none" />
+                <i class="fa fa-search fa-2x" style="color:#ffeded;margin-left:20px;width:auto;margin-top:10px;"></i>
 
-                <span><i class="fa fa-search fa-2x" style="color:#ffeded;margin-left:20px;width:auto;margin-top:10px;"></i></span>
-
-                <input id="field" type="text" name="query" placeholder="Type in a product here!">
+                <input id="field" type="text" name="query" placeholder="Search products here">
                 <!-- <input type="submit" value="subimt"> -->
             </form>
 
         </div>
 
         {% block content %}
-            <div>
-                <h1>Welcome to PCPT</h1>
-                <p>under construnction lmao</p>
-            </div>
         {% endblock %}
 
     </div>
 
     <script src="/static/js/menuButton.js"></script>
-
+    <style>        
+        #field::-webkit-input-placeholder {
+            color: #ffadad;
+        }
+    </style>
 </body>
 </html>
