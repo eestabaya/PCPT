@@ -4,16 +4,19 @@ from api.api import get_from_mongo
 mod = Blueprint("view_results", __name__)
 
 
-@mod.route("/search", methods=["POST"])
+@mod.route("/search", methods=["GET"])
 def process_results():
 
+    """
     # TODO this doesnt work
     if request.method != "POST":
         return render_template("searchresults.html")
+    """
 
-    query = request.form['query']
+    # query = request.form['query']
+    query = request.args.get('query')
 
-    if query is "" or query.isspace():
+    if query is None or query is "" or query.isspace():
         return render_template("searchresults.html")
 
     items = get_from_mongo()
