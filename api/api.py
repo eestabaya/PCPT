@@ -14,9 +14,10 @@ def get_from_mongo():
         items = []
         for item in db_items:
             items.append(item)
-        return {"success": True, "items": items}
+        return {"success": "true", "items": items}
     except Exception as e:
-        return {"success": False, "cause": str(e)}
+        return {"success": "false", "cause": str(e)}
+
 
 def add_scraped_product():
     # TODO pass in product's ID, name, type, rating, and brand
@@ -32,7 +33,7 @@ def add_scraped_product():
     store_url = "https://store.com/product"
 
     # product exists, update its Store field
-    if(db.product.find({"product_id":product_id}).count > 0):
+    if db.product.find({"product_id":product_id}).count > 0:
         db.product.update(
             {"product_id":product_id},
             {
@@ -45,6 +46,7 @@ def add_scraped_product():
                 }
             }
         )
+
     # product does not exist, add it to the database
     else:
         db.product.insert(
@@ -63,7 +65,7 @@ def add_scraped_product():
                 ]
             }
         )
-    return {"success": True};
+    return {"success": "true"}
 
 
 @mod.route("/api/<uid>")

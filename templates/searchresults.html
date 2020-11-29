@@ -11,10 +11,9 @@
     <b>bigger test</b>
     <script>
         $(document).ready(function() {
-            console.log("zzsuper");
+
             let myLoad = {{ var|tojson }};
             let ez = {{ e|tojson }};
-            console.log(myLoad);
 
             let f = myLoad.filter(q => q.includes(ez));
 

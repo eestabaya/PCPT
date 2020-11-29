@@ -11,6 +11,7 @@ from app import db
 from app.forms import RegistrationForm
 """
 
+
 @mod.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -20,6 +21,7 @@ def login():
             form.username.data, form.remember_me.data))
         return redirect('/')
     return render_template('login.html', title='Sign In', form=form)
+
 
 """
 def login():
