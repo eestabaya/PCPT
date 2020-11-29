@@ -19,29 +19,42 @@ def get_from_mongo():
         return {"success": "false", "cause": str(e)}
 
 
-def add_scraped_product():
+def add_scraped_product(_id="", product_name="some product", product_type="computer thing", product_rating=0.0, product_brand="brand"):
     # TODO pass in product's ID, name, type, rating, and brand
-    product_id = 0
+    _id = 0
+    """
     product_name = "test product"
     product_type = "computer thing"
     product_rating = 0.0
     product_brand = "brand"
+    """
 
     # TODO pass in store data
     store_id = 0
     product_price = 0.0
     store_url = "https://store.com/product"
 
+    # TODO pass in date
+    date = "placeholder"
+
     # product exists, update its Store field
-    if db.product.find({"product_id": product_id}).count > 0:
+    if db.product.find({"_id": _id}).count > 0:
+
         db.product.update(
-            {"product_id": product_id},
+            {"_id": _id},
             {
                 "$push": {
-                    "stores": {
+                    "stores":
+                    {
                         "store_id": store_id,
                         "product_price": product_price,
                         "store_url": store_url
+                    },
+
+                    "hist_price_data":
+                    {
+                        "product_price": product_price,
+                        "date": date
                     }
                 }
             }
@@ -51,16 +64,24 @@ def add_scraped_product():
     else:
         db.product.insert(
             {
-                "product_id": product_id,
+                "_id": _id,
                 "product_name": product_name,
                 "product_type": product_type,
                 "product_rating": product_rating,
                 "product_brand": product_brand,
-                "stores": [
+                "stores":
+                [
                     {
                         "store_id": store_id,
                         "product_price": product_price,
                         "store_url": store_url
+                    }
+                ],
+                "hist_price_data":
+                [
+                    {
+                        "product_price": product_price,
+                        "date": date
                     }
                 ]
             }
@@ -70,20 +91,25 @@ def add_scraped_product():
 
 @mod.route("/api/eat/<product_id>")
 def get_from_database(product_id):
+
+    """
+    TODO
     e = db["product"].find({"product_id": product_id})
     items = []
 
     print(type(e))
 
-    """
     for i in e:
         items.append(i)
-    """
 
     for x in e:
         print(x)
 
     return {"something": items}
+    """
+
+    product = db.product.find_one({"_id": product_id})
+    return product
 
 
 @mod.route("/api/<uid>")

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 
 mod = Blueprint("view_sys_config", __name__)
 
@@ -29,4 +29,5 @@ def view_config_page():
         }
     }
 
-    return render_template("configuration.html", var=stuff)
+    user_id = "some user id goes here"
+    return render_template("configuration.html", config=configurations[user_id])
