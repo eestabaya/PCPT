@@ -15,19 +15,19 @@ def view_comparison_page():
         return render_template("some_error_page_goes_here.html")
 
     # do some database stuff
-    # get product from database using item id
+    # get products from database using item ids
 
     # TODO return an error page if invalid product
     item[0] = "something"
     if item[0] is None:
         return render_template("some_error_page_goes_here.html")
 
-    # then return product!
+    # then return products comparison!
     # placeholder below
 
     hierarchy = {
 
-        # we found this from item_id
+        # Sample items
         "item_1_id": {
             "name": "",
             "something": "else",
