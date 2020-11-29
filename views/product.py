@@ -1,48 +1,51 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 
-from views.comparison import view_comparison_page, add_comparison_page
-from views.sys_config import view_config_page, add_config, create_config
-import webbrowser
 mod = Blueprint("view_product", __name__)
 
 
-@mod.route("/product", methods["POST"])
+@mod.route("/product", methods=["GET"])
+def view_product_page():
 
-def view_product_page(item):
-    #if request.method != "POST":
-     #   return render_template("product.html")
-    #if item is null:
-     #   return render_template("error.html")
+    item_id = request.args.get('id')
+    print(request.args)
 
+    # TODO return an error page if header is incomplete
+    if item_id is None:
+        return render_template("some_error_page_goes_here.html")
 
+    # do some database stuff
+    # get product from database using item id
 
-    return render_template("product.html", item)
+    # TODO return an error page if invalid product
+    item = "something"
+    if item is None:
+        return render_template("some_error_page_goes_here.html")
 
-def add_comparison(item):
-    #if item is null:
-     #   return null
-    return add_comparison_page(item)
+    # then return product!
+    # placeholder below
 
-def view_comparison():
-    return view_comparison_page()
+    hierarchy = {
 
-def buy_product(item):
-    # if item is null:
-    #   return null
-    webbrowser.open(item.store_url)
+        # we found this from item_id
+        "my_item_id": {
+            "name": "",
+            "something": "else",
 
-def new_config(item):
-    # if item is null:
-    #   return null
-    return create_config(item)
+            "websites": {
 
-def add_to_config(item):
-    # if item is null:
-    #   return null
-    return add_config(item)
+                "amazon": {
+                    "link": "link here!",
+                    "price?": "idk what else"
+                },
 
-def view_config():
-    return view_config_page
+                "adorama": {
+                    "link": "link here!",
+                    "price?": "idk what else"
+                }
+            }
+        },
 
+        "another item id": {}
+    }
 
-
+    return render_template("product.html", var=hierarchy["my_item_id"])
