@@ -35,7 +35,7 @@ def add_scraped_product():
     # product exists, update its Store field
     if db.product.find({"product_id":product_id}).count > 0:
         db.product.update(
-            {"product_id":product_id},
+            {"product_id": product_id},
             {
                 "$push": {
                     "stores": {
@@ -67,6 +67,8 @@ def add_scraped_product():
         )
     return {"success": "true"}
 
+def get_from_database(product_id):
+    return db.product.find({"product_id": product_id})
 
 @mod.route("/api/<uid>")
 def get_stuff(uid):
