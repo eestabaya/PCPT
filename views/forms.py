@@ -13,6 +13,10 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
 
+class ForgotForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired()])
+    submit = SubmitField('Send Email')
+
 """
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
