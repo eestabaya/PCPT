@@ -33,7 +33,7 @@ def add_scraped_product():
     store_url = "https://store.com/product"
 
     # product exists, update its Store field
-    if db.product.find({"product_id":product_id}).count > 0:
+    if db.product.find({"product_id": product_id}).count > 0:
         db.product.update(
             {"product_id": product_id},
             {
@@ -67,8 +67,24 @@ def add_scraped_product():
         )
     return {"success": "true"}
 
+
+@mod.route("/api/eat/<product_id>")
 def get_from_database(product_id):
-    return db.product.find({"product_id": product_id})
+    e = db["product"].find({"product_id": product_id})
+    items = []
+
+    print(type(e))
+
+    """
+    for i in e:
+        items.append(i)
+    """
+
+    for x in e:
+        print(x)
+
+    return {"something": items}
+
 
 @mod.route("/api/<uid>")
 def get_stuff(uid):
@@ -96,5 +112,4 @@ def get_from_scrape():
 
 @mod.route("/api/load")
 def load_stuff():
-
     return {"success": True}

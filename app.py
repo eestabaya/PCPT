@@ -2,7 +2,7 @@ import uuid
 
 import flask
 from flask import Flask, render_template
-from flask_wtf import CsrfProtect
+from flask_wtf import CSRFProtect
 
 from views import home, results, sys_config, comparison, registration, product, login
 
@@ -25,7 +25,7 @@ registers = [
 for registration in registers:
     app.register_blueprint(registration)
 
-CsrfProtect(app)
+CSRFProtect(app)
 
 
 @app.errorhandler(404)

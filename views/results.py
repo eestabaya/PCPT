@@ -47,10 +47,9 @@ def process_results():
         },
     }
 
-
-
     # TODO here are some notes
-        # take data, let results = {{ template }} <-- i honestly have no idea how to run this
-        # load and json stuff up, jquery gets handled from there
+    # take data, let results = {{ template }} <-- i honestly have no idea how to run this
+    # load and json stuff up, jquery gets handled from there
+
     print(list(temp.keys()))
     return render_template("searchresults.html", var=list(temp.keys()), e=query)
