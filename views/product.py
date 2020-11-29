@@ -10,16 +10,16 @@ def view_product_page():
     print(request.args)
 
     # TODO return an error page if header is incomplete
-    if item_id is None:
-        return render_template("some_error_page_goes_here.html")
+    # if item_id is None:
+        # return render_template("some_error_page_goes_here.html") commented but TODO
 
     # do some database stuff
     # get product from database using item id
 
     # TODO return an error page if invalid product
-    item = "something"
-    if item is None:
-        return render_template("some_error_page_goes_here.html")
+    # item = "something"
+    # if item is None:
+        # return render_template("some_error_page_goes_here.html")commented but TODO
 
     # then return product!
     # placeholder below
