@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired
 
 
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
-#from app.models import User
+# from app.models import User
 
 
 class LoginForm(FlaskForm):
