@@ -7,7 +7,6 @@ from utils.db_config import db
 
 mod = Blueprint("api_stuff", __name__)
 
-
 def get_from_mongo():
     try:
         db_items = db["test"].find({})
@@ -21,7 +20,7 @@ def get_from_mongo():
 
 def add_scraped_product():
     # TODO pass in product's ID, name, type, rating, and brand
-    product_id = 0
+    id = 0
     product_name = "test product"
     product_type = "computer thing"
     product_rating = 0.0
@@ -32,16 +31,26 @@ def add_scraped_product():
     product_price = 0.0
     store_url = "https://store.com/product"
 
+    # TODO pass in date
+    date = "placeholder"
+
     # product exists, update its Store field
-    if db.product.find({"product_id":product_id}).count > 0:
+    if db.product.find({"_id": id}).count > 0:
         db.product.update(
-            {"product_id": product_id},
+            {"_id": id},
             {
                 "$push": {
-                    "stores": {
+                    "stores":
+                    {
                         "store_id": store_id,
                         "product_price": product_price,
                         "store_url": store_url
+                    },
+
+                    "hist_price_data":
+                    {
+                        "product_price": product_price,
+                        "date": date
                     }
                 }
             }
@@ -51,16 +60,24 @@ def add_scraped_product():
     else:
         db.product.insert(
             {
-                "product_id": product_id,
+                "_id": id,
                 "product_name": product_name,
                 "product_type": product_type,
                 "product_rating": product_rating,
                 "product_brand": product_brand,
-                "stores": [
+                "stores":
+                [
                     {
                         "store_id": store_id,
                         "product_price": product_price,
                         "store_url": store_url
+                    }
+                ],
+                "hist_price_data":
+                [
+                    {
+                        "product_price": product_price,
+                        "date": date
                     }
                 ]
             }
@@ -68,7 +85,10 @@ def add_scraped_product():
     return {"success": "true"}
 
 def get_from_database(product_id):
-    return db.product.find({"product_id": product_id})
+    product = db.product.findOne({"_id": product_id})
+    return product
+
+
 
 @mod.route("/api/<uid>")
 def get_stuff(uid):
