@@ -6,6 +6,38 @@
     <div class="profile-module">
         <h1>{{user.name}}</h1>
         <h2>{{user.email}}</h2>
+
+        <div class="change-password-module">
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <h3>Change Password</h3>
+            <p>
+                {{ form.old_password.label }}
+                {% for error in form.old_password.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}<br>
+                {{ form.old_password(size=32) }}<br>
+            </p>
+            <p>
+                {{ form.new_password.label }}
+                {% for error in form.new_password.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}<br>
+                {{ form.new_password(size=32) }}<br>
+            </p>
+            <p>
+                {{ form.new_password2.label }}
+                {% for error in form.new_password2.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}<br>
+                {{ form.new_password2(size=32) }}<br>
+            </p>
+            <p>
+                {{ form.submit() }}
+            </p>
+        </form>
+    </div>
+
     </div>
     <style>
     
@@ -33,6 +65,24 @@
         width:80%;
         text-align: left;
         margin: auto;
+    }
+
+    .change-password-module{
+        height: 300px;
+        width: 430px;
+        border-radius: 50px;
+        margin:auto;
+        margin-top: 100px;
+        font-family: DM Mono;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 42px;
+        text-align: left;
+        padding:25px;
+        padding-left:50px;
+        justify-content: center;
+        color: #000000;
     }
 
     </style>

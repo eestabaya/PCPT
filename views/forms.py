@@ -48,3 +48,21 @@ class RegistrationForm(FlaskForm):
             return False
 
         return True
+
+class ChangePasswordForm(FlaskForm):
+    old_password = PasswordField('Old Password', validators=[DataRequired()])
+    new_password = PasswordField('New Password', validators=[DataRequired()])
+    new_password2 = PasswordField(
+        'Repeat New Password', validators=[DataRequired(), EqualTo('new_password2', message='Passwords do not match.')])
+    submit = SubmitField('Change Password')
+
+class ForgotPasswordForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+
+    def validate_email(self, email):
+        user = User.get_user(email.data, email=True)
+        if user is None:
+            self.email.errors.append('Could not find account.')
+            return False
+
+        return True
