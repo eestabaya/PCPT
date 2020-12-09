@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, render_template
 from flask_login import current_user
+from views.forms import ChangePasswordForm
 
 mod = Blueprint('view_profile', __name__)
 
@@ -33,5 +34,7 @@ def view_profile_page():
             "keyboard"
         ]
     }
+
+    form = ChangePasswordForm()
 
     return render_template("profile.html", user=user, data=user_json)
