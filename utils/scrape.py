@@ -31,28 +31,14 @@ def get_webdriver():
     options.add_argument("--disable-infobars")
     options.add_argument("--disable-dev-shm-usage")
     driver = webdriver.Chrome(options=options)
-    # driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
-    # driver.execute_cdp_cmd('Network.setUserAgentOverride', {
-    #    "userAgent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
-    #                 'Chrome/83.0.4103.53 Safari/537.36'})
     return driver
 
 
 def extract_source(url, driver):
     """given a page's url, returns the html source"""
-    source = None
-    if type(driver) == webdriver.Chrome:
-        driver.get(url)
-        driver.execute_script("window.scrollTo(0,document.body.scrollHeight/4)")
-        time.sleep(5)
-        driver.execute_script("window.scrollTo(0,document.body.scrollHeight/2)")
-        time.sleep(5)
-        driver.execute_script("window.scrollTo(0,3*document.body.scrollHeight/4)")
-        time.sleep(5)
-        driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
-        time.sleep(5)
-        source = driver.page_source
-        time.sleep(20)
+    driver.get(url)
+    time.sleep(5)
+    source = driver.page_source
 
     return source
 
@@ -94,7 +80,7 @@ def extract_bh_page(source):
 
         product_name = product_soup.find(
             lambda tag: tag.name == 'div' and tag.get('data-selenium') == 'miniProductPageProductSkuInfo').contents[
-            0].split()
+            0].split("#")
         product_name = product_name[len(product_name) - 1]
 
         product_price_section = product_soup.find(
@@ -105,7 +91,7 @@ def extract_bh_page(source):
         product_price = product_price_section.contents[0].contents[0] + "." + \
                         product_price_section.contents[1].contents[0]
 
-        product_link = 'www.bhphotovideo.com/' + product_soup.find(
+        product_link = 'www.bhphotovideo.com' + product_soup.find(
             lambda tag: tag.name == 'a' and tag.get('data-selenium') == 'miniProductPageProductNameLink').get('href')
 
         part_num_to_data[product_name] = [product_price, product_link]
@@ -184,6 +170,7 @@ def scrape_bh_category(category_url):
     for i in range(1, (num_products - 1) // 30 + 2):
         page_data = extract_bh_page(extract_source(category_url + "/pn/" + str(i), driver))
         part_num_to_data.update(page_data)
+    driver.close()
     return part_num_to_data
 
 
@@ -196,6 +183,7 @@ def scrape_adorama_category(category_url):
     for i in range(1, num_products, 15):
         page_data = extract_adorama_page(extract_source(category_url + "?startAt=" + str(i), driver))
         part_num_to_data.update(page_data)
+    driver.close()
     return part_num_to_data
 
 
@@ -208,14 +196,15 @@ def scrape_newegg_category(category_url):
     for i in range(1, num_pages):
         page_data = extract_newegg_page(extract_source(category_url + "&page=" + str(i), driver))
         part_num_to_data.update(page_data)
+    driver.close()
     return part_num_to_data
 
 
 def get_gpu_prices():
     gpu_prices = {}
-    #gpu_prices['adorama'] = scrape_adorama_category(store_urls['adorama']['gpu'])
+    # gpu_prices['adorama'] = scrape_adorama_category(store_urls['adorama']['gpu'])
     gpu_prices['bhphotovideo'] = scrape_bh_category(store_urls['bhphotovideo']['gpu'])
-    #gpu_prices['newegg'] = scrape_newegg_category(store_urls['newegg']['gpu'])
+    # gpu_prices['newegg'] = scrape_newegg_category(store_urls['newegg']['gpu'])
     return gpu_prices
 
 
