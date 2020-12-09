@@ -5,8 +5,7 @@
 import bs4
 import time
 
-#from selenium import webdriver
-webdriver = "TODO"
+from selenium import webdriver
 
 store_urls = {
     'adorama':
