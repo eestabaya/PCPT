@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block title %}My Builds{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        {% if user %}
+            <h1>{{ user.name }}'s PC Builds</h1>
+        {% else %}
+            <h1>Your PC Builds</h1>
+        {% endif %}
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        {% for config in configs %}
+        <div class="gallery-container">
+            <h2>{{config}}</h2>
+            <div class="gallery">
+                {% for part in configs[config].parts %}
+                    <div class="item">
+                        <img src="{{ configs[config].parts[part].imgurl }}">
+                        <h3>{{ part }}</h3>    
+                    </div>
+                {% endfor %}
+            </div>
+        <a class="button">Edit Config</a>
+        </div>
+        <br>
+        <br>
+        {% endfor %}
+    </div>
+
+    <style>
+        h1{
+            font-family: DM Mono;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 48px;
+            line-height: 62px;
+
+            color: #000000;
+        }
+
+        h2{
+            font-family: DM Mono;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 32px;
+            line-height: 48px;
+
+            color: #000000;
+        }
+
+        .container{
+            margin-left:5vw;
+        }
+
+        .gallery {
+            display:flex;
+            flex-direction: row;
+            justify-content: left;
+            width:1000px;
+            height:280px;
+            overflow-x: scroll;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            border: 1px solid #ffadad;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #FFADAD;  
+            border-radius: 10px;
+        }
+
+        .item{
+            margin-right: 50px;
+        }
+
+        .gallery img{
+            width:200px;
+            height:200px;
+        }
+
+        .gallery h3{
+            width: 200px;
+            height: 50px;
+            margin-bottom: 0px;
+            margin-top: 0px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            color: #000;
+            font-size: 20px;
+        }
+
+        .button{
+            margin-top: 20px;
+            background: #FFADAD;
+            border-radius: 50px;         
+            width: 300px;
+            height: 60px;
+            font-family: DM Mono;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 20px;
+            line-height: 36px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            color: #FFFFFF;
+        }
+
+        .footer{
+            position: absolute;
+            width: 100%;
+            height: 15%;
+            left: 0px;
+            top: 85%;
+
+            /* Red */
+
+            background: #FFADAD;
+        }
+    </style>
+    <script src="/static/js/request.js"></script>
+{% endblock %}

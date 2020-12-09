@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!-- Base UI by Jack Yang -->
+<html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=0.85">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Sample Text{% endblock %}</title>
+    {% include "libraries.html" %}
+</head>
+
+<body>
+    <input type="checkbox" id="chk">
+
+    <label for="chk" class="show-menu menuBtn type1">
+        <span></span>
+    </label>
+
+    <div class="menu">
+
+        <a href="/">Home</a>
+        <!-- <a href="#">About</a>
+        <a href="#">Browse</a> -->
+
+        {% if user %}
+            <a href="/profile">Profile</a>
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+        {% endif %}
+
+    </div>
+
+    <div class="wrapper" style="transition: 0.7s;overflow-y:scroll">
+
+        <div class="searchBar">
+
+            <form action="/search">
+                <input type="submit" style="display: none" />
+                <i class="fa fa-search fa-2x" style="color:#ffeded;margin-left:20px;width:auto;margin-top:10px;"></i>
+
+                <input id="field" type="text" name="query" placeholder="Search products here" value="{{ request.form.search }}">
+                <!-- <input type="submit" value="subimt"> -->
+            </form>
+
+        </div>
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
+    <script src="/static/js/menuButton.js"></script>
+
+</body>
+</html>

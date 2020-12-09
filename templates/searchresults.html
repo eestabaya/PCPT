@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+{% block title %}Search{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Showing {{ query_size }} results for "{{ query }}"</h1>
+        <div class="sort">
+
+        </div>
+
+        <div class="filter">
+            <h2>Filter</h2>
+            <div style="background-color: #FFADAD;width:200px;height:10px;"></div>
+            <h3>Brands</h3>
+            {% for brandname in var.brandnames %}
+            <div style="display: flex; flex-direction: row;width:200px;height:50px">
+                <input type="checkbox" id="{{brandname}}">
+                <p style="color: #FFADAD; font-size: 20px; margin-top:-5px;margin-left: 20px;">{{brandname}}</p>
+            </div>
+            {% endfor %}
+            <h3>Model</h3>
+            {% for model in var.models %}
+                <div style="display: flex; flex-direction: row;width:200px;height:50px">
+                    <input type="checkbox" id="{{model}}">
+                    <p style="color: #FFADAD; font-size: 20px; margin-top:-5px;margin-left: 20px;">{{model}}</p>
+                </div>
+                
+            {% endfor %}
+            <h3>Price Range</h3>
+            <script>
+                $( function() {
+                  $( "#slider-range" ).slider({
+                    range: true,
+                    min: 0,
+                    max: 1000,
+                    values: [ 100, 300 ],
+                    slide: function( event, ui ) {
+                      $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+                    }
+                  });
+                  $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+                    " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+                } );
+                </script>
+              </head>
+              <body>
+               
+              <p style="color: #FFADAD; font-size: 20px; margin-top:-5px;margin-left: 20px; width:180px">
+                <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold; width:180px">
+              </p>
+              <div id="slider-range" style="background-color: #FFADAD; font-size: 20px; margin-top:-5px;margin-left: 20px; width:180px"></div>
+        </div>
+
+        {% if var %}
+
+            <div class="products">
+                {% for product in var.products %}
+                    <div class="product" id="{{product.model}} {{product.brandname}}">
+                        <a href="{{ product.product_url }}" style="text-decoration: none;color:#000">
+                            <img src="{{product.imgurl}}">
+                            <h3>{{ product.product_name }}</h3>
+                            <div class="rating item{{ product.product_id }}">
+                                <i class="fas fa-star" id="star1"></i>
+                                <i class="fas fa-star" id="star2"></i>
+                                <i class="fas fa-star" id="star3"></i>
+                                <i class="fas fa-star" id="star4"></i>
+                                <i class="fas fa-star" id="star5"></i>
+                            </div>
+                            <h3>${{ product.price_low }} - {{ product.price_high }}</h3>
+                            {% if product.product_in_stock %}
+                                <h3>In Stock</h3>
+                            {% else %}
+                                <h3>Out of Stock</h3>
+                            {% endif %}
+                        </a>
+                    </div>
+                    <script>
+                        var rating = {{product.product_rating}};
+                        switch (rating) {
+                            case 5:
+                                $('.item{{product.product_id}} #star5').toggleClass('blue');
+                            case 4:
+                                $('.item{{product.product_id}} #star4').toggleClass('blue');
+                            case 3:
+                                $('.item{{product.product_id}} #star3').toggleClass('blue');
+                            case 2:
+                                $('.item{{product.product_id}} #star2').toggleClass('blue');
+                            case 1:
+                                $('.item{{product.product_id}} #star1').toggleClass('blue');
+                            case 0:
+                        }
+                        {% for brandname in var.brandnames %}
+                            $('input #{{brandname}}').click({
+                                $("product").filter("#{{brandname}}").hide();
+                            });
+                        {% endfor %}
+                    </script>
+                {% endfor %}
+            </div>
+
+        {% endif %}
+
+    </div>
+
+    <style>
+        h1 {
+            font-family: DM Mono;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 48px;
+            line-height: 62px;
+
+            color: #000000;
+        }
+
+        h2 {
+            font-family: DM Mono;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 32px;
+            line-height: 48px;
+
+            color: #FFADAD;
+        }
+
+        h3 {
+            font-family: DM Mono;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 24px;
+            line-height: 32px;
+
+            color: #FFADAD;
+
+        }
+
+        .container {
+            margin-left: 5vw;
+            overflow: scroll;
+            height: 100%
+        }
+
+        .filter {
+            width: 250px;
+            height: 800px;
+            background-color: #611101;
+            position: absolute;
+            left: 0;
+            top: 250px;
+            padding-left: 20px;
+        }
+
+        .rating {
+            height: 20px;
+            top: -10px;
+        }
+
+        .blue {
+            color: #ffadad
+        }
+
+        .products {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            width: 1000px;
+            height: 1000px;
+            flex-wrap: wrap;
+            margin-left: 220px;
+            margin-top: 65px;
+        }
+
+        .products product {
+            width: 300px;
+            height: 350px;
+            margin-left: 25px;
+            margin-right: 25px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            background-color: #ffadad;
+        }
+
+        .product img {
+            width: 300px;
+            height: 200px;
+            margin-bottom: 5px;
+        }
+
+        .product h3 {
+            width: 300px;
+            height: 30px;
+            margin-bottom: 0px;
+            margin-top: 0px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            color: #000;
+            font-size: 20px;
+        }
+
+
+        .footer {
+            position: absolute;
+            width: 100%;
+            height: 15%;
+            left: 0px;
+            top: 85%;
+
+            /* Red */
+
+            background: #FFADAD;
+        }
+    </style>
+{% endblock %}

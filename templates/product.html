@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+{% block title %}Product{% endblock %}
+
+{% block content %}
+
+        <div class="container">
+            <h2>{{ product.product_name }}</h2>
+            <div class="container-cols">
+                <div class="gallery-container">
+                    <div class="rating">
+                        <i class="fas fa-star" id="star1"></i>
+                        <i class="fas fa-star" id="star2"></i>
+                        <i class="fas fa-star" id="star3"></i>
+                        <i class="fas fa-star" id="star4"></i>
+                        <i class="fas fa-star" id="star5"></i>
+                    </div>
+                    <div class="product-img">            
+                        <img src="{{ product.product_imgurl }}">
+                    </div>
+            
+                </div>
+                <div class="column2">
+                    <h2>Product Details</h2>
+                    <p class="detailsTxt">
+                        {{ product.product_description }}
+                    </p>
+                    <h2>Product Prices</h2>
+                    <table>
+                        {% for site in product.stores %}
+                        <tr>
+                          <td>
+                          <img id="iconimg" src="{{ site.store_iconurl }}"> <!-- TODO -->
+                          <th>{{site}}</th>
+                          <td><a href="{{ site.store_url }}">Store Page</a></td>
+                          {% if product.stores[site].product_in_stock %}
+                            <td>In Stock</td>
+                          {% else %}
+                            <td>Out of Stock</td>
+                          {% endif %}
+                          <td>${{ product.stores[site].product_price}}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <h2>Price History</h2>
+                    <canvas id="myChart" width="1000px" height="700px"></canvas>
+                </div>
+            </div>
+            <script>
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan 20','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct 20'],
+                        datasets: [{ 
+                            label: "Price History",
+                            data: [120,114,106,106,107,111,133,120,110,120]
+                        }]
+                    }
+                });
+            </script>
+        </div>
+    <script>
+        var rating = {{product.product_rating}};
+        switch(rating){
+            case 5:
+                $('#star5').toggleClass('blue');
+            case 4:
+                $('#star4').toggleClass('blue');
+            case 3:
+                $('#star3').toggleClass('blue');
+            case 2:
+                $('#star2').toggleClass('blue');
+            case 1:
+                $('#star1').toggleClass('blue');
+            case 0:
+        }
+    </script>
+    <style>
+
+        h1{
+            font-family: DM Mono;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 48px;
+            line-height: 62px;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        h2{
+            font-family: DM Mono;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 32px;
+            line-height: 48px;
+
+            color: #000000;
+        }
+
+        p{
+            font-size: 18px;
+        }
+
+        .detailsTxt{
+            overflow-y: scroll;
+            height:100px;
+        }
+
+        #iconimg{
+            height:20px;
+            width: 20px;
+        }
+
+        .blue{
+            color:#ffadad
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            border: 1px solid #ffadad;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #FFADAD;  
+            border-radius: 10px;
+        }
+
+        .container{
+            margin-left:5vw;
+        }
+
+        .container-cols{
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            width:1100px
+        }
+
+        .column2{
+            margin-left:100px;
+            width:700px
+        }
+
+        .column2 table{
+            background-color: #ffffff;
+            width:700px;
+            height:160px;
+            padding:20px;
+            border-radius: 10px;
+        }
+
+        
+        th, td {
+        padding: 10px;
+        }
+
+        .rating{
+            display:flex;
+            flex-direction: row;
+            justify-content: space-between;
+            flex-basis: content;
+            width:100px;
+            height:20px;
+            top:-20px;
+            margin-bottom: 30px;
+        }
+
+        .rating img {
+            height:20px;
+            width:20px;
+        }
+
+        .gallery, img{
+            width:15vw;
+            height:15vw;
+        }
+
+        .button{
+            margin-top: 40px;
+            background: #FFADAD;
+            border-radius: 50px;         
+            width: 300px;
+            height: 60px;
+            font-family: DM Mono;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 20px;
+            line-height: 36px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            color: #FFFFFF;
+        }
+
+        .footer{
+            position: absolute;
+            width: 100%;
+            height: 15%;
+            left: 0px;
+            top: 85%;
+
+            /* Red */
+
+            background: #FFADAD;
+        }
+    </style>
+    <script src="/static/js/request.js"></script>
+{% endblock %}

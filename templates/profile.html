@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+    <div class="profile-module">
+        <h1>{{user.name}}</h1>
+        <h2>{{user.email}}</h2>
+    </div>
+    <style>
+    
+    .profile-module{
+        background-color: #ffadad;
+        height: 460px;
+        width: 430px;
+        border-radius: 50px;
+        margin:auto;
+        margin-top: 100px;
+        font-family: DM Mono;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 42px;
+        text-align: left;
+        padding:25px;
+        padding-left:50px;
+        justify-content: center;
+        color: #000000;
+    }
+
+    p{
+        height: 100px;
+        width:80%;
+        text-align: left;
+        margin: auto;
+    }
+
+    </style>
+{% endblock %}
