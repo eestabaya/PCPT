@@ -37,4 +37,4 @@ def view_profile_page():
 
     form = ChangePasswordForm()
 
-    return render_template("profile.html", user=user, data=user_json)
+    return render_template("profile.html", user=user, data=user_json, form=form)
