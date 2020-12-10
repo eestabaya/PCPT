@@ -21,9 +21,11 @@ def view_profile_page():
         ]
     }
 
+    form = ChangePasswordForm()
+
     if not user.is_authenticated:
         # return redirect('/login')
-        return render_template("profile.html", user={"name": "John Doe", "email": "jdoe@ucsd.edu"}, data=test_json)
+        return render_template("profile.html", user={"name": "John Doe", "email": "jdoe@ucsd.edu"}, data=test_json, form=form)
 
     user_json = {
         "name": user.name,
@@ -35,6 +37,5 @@ def view_profile_page():
         ]
     }
 
-    form = ChangePasswordForm()
 
     return render_template("profile.html", user=user, data=user_json, form=form)

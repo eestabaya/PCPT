@@ -45,7 +45,7 @@ def view_product_page():
                     "store_url": "https://www.amazon.com/XFX-Radeon-1386MHz-Graphics-RX-580P8DFD6/dp/B06Y66K3XD/ref=sr_1_3?_encoding=UTF8&c=ts&dchild=1&keywords=Computer+Graphics+Cards&qid=1606706208&s=pc&sr=1-3&ts_id=284822",
                     "product_price": 199.99,
                     "product_in_stock": True,
-                    "iconurl":"https://i.pinimg.com/originals/08/5f/d8/085fd8f7819dee3b716da73d3b2de61c.jpg",
+                    "store_iconurl":"https://i.pinimg.com/originals/08/5f/d8/085fd8f7819dee3b716da73d3b2de61c.jpg",
                 },
 
                 "Adorama": {
