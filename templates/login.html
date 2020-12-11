@@ -2,21 +2,6 @@
 
 {% block title %}Login{% endblock %}
 
-{% with messages = get_flashed_messages() %}
-    {% if messages %}
-        {% if messages|length == 1 %}
-            {% for message in messages %}
-                <script src="/static/js/alertbox.js"></script>
-                <script type="text/javascript">
-                    let msg = {{ message }};
-                    sendAlert();
-                </script>
-            {% endfor %}
-        {% endif %}
-    {% endif %}
-{% endwith %}
-
-
 {% block content %}
     <div class="login-module">
         <form action="" method="post" novalidate>

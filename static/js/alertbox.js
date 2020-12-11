@@ -1,3 +1,3 @@
-function sendAlert(msg){
+$("document").ready(function() {
     alert(msg);
-}
+})
