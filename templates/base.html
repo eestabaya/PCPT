@@ -56,7 +56,7 @@
         {% if messages %}
             {% for message in messages %}
                 <script>
-                    let msg = {{ messsage }};
+                    let msg = "{{ message }}";
                     alert(msg);
                 </script>
             {% endfor %}
