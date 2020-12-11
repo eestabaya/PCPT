@@ -24,7 +24,7 @@ def login():
         user = User.get_user(form.username.data, email=is_email)
 
         if user is None or not user.check_password(form.password.data):
-            flash('Invalid username or password')
+            flash('Invalid username or password!')
             return redirect('/login')
 
         login_user(user, remember=form.remember_me.data)

@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template
+from flask import Blueprint, redirect, render_template, flash
 from flask_login import current_user
 from views.forms import ChangePasswordForm
 from api.api import find_user
@@ -31,12 +31,11 @@ def view_profile_page():
     form = ChangePasswordForm()
 
     if form.validate_on_submit():
-        old_password = form.old_password.data
-        new_password = form.new_password.data
-        cfm_password = form.new_password2.data
 
-        if not user.check_password(old_password):
-            # throw error
-            pass
+        if not user.check_password(form.password.data):
+            flash('Old password is incorrect!')
+            return render_template("profile.html", user=user, data=user_json, form=form)
+
+        # update password here
 
     return render_template("profile.html", user=user, data=user_json, form=form)
