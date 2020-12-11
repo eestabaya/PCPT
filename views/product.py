@@ -49,7 +49,7 @@ def view_product_page():
                 },
 
                 "Adorama": {
-                    "store_url": "https://www.amazon.com/XFX-Radeon-1386MHz-Graphics-RX-580P8DFD6/dp/B06Y66K3XD/ref=sr_1_3?_encoding=UTF8&c=ts&dchild=1&keywords=Computer+Graphics+Cards&qid=1606706208&s=pc&sr=1-3&ts_id=284822",
+                    "store_url": "https://www.adorama.com/als.mvc/nspc/Error/NoResultFound?SearchInfo=xfx%20radeon%20rx%20580%20gts%20xxx%20edition%201386mhz%20oc%20,%208gb%20gddr5,%20vr%20ready,%20dual%20bios,%203xdp%20hdmi%20dvi,%20amd%20gr&SearchMode=discontinued",
                     "product_price": 120.00,
                     "product_in_stock": False,
                     "store_iconurl": "https://res-3.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco/v1417180938/d4ed2k3yhq1dg3zs8kad.jpg"
