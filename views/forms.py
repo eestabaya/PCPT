@@ -52,9 +52,8 @@ class RegistrationForm(FlaskForm):
 
 class ChangePasswordForm(FlaskForm):
     old_password = PasswordField('Old Password', validators=[DataRequired()])
-    new_password = PasswordField('New Password', validators=[DataRequired()])
-    new_password2 = PasswordField(
-        'Repeat New Password', validators=[DataRequired(), EqualTo('new_password', message='Passwords do not match.')])
+    new_password = PasswordField('New Password', validators=[DataRequired(), EqualTo('new_password2', message='Passwords do not match.')])
+    new_password2 = PasswordField('Repeat Password', validators=[DataRequired()])
     submit = SubmitField('Change Password')
 
 
