@@ -27,7 +27,7 @@ def process_results():
                 "price_high": 201.99,
                 "product_in_stock": True,
                 "product_id": 1,
-                "product_url": "http://127.0.0.1:8080/product",
+                "product_url": "http://34.220.161.8/product",
                 "model": "Nvidia",
                 "imgurl" : "https://static.bhphoto.com/images/images2500x2500/1548869076_1456228.jpg"
             },
@@ -38,7 +38,7 @@ def process_results():
                 "price_high": 201.99,
                 "product_in_stock": True,
                 "product_id": 2,
-                "product_url": "http://127.0.0.1:8080/product",
+                "product_url": "http://34.220.161.8/product",
                 "imgurl" : "https://static.bhphoto.com/images/images2500x2500/1548869076_1456228.jpg"
             },
             {
@@ -48,7 +48,7 @@ def process_results():
                 "price_high": 201.99,
                 "product_in_stock": True,
                 "product_id": 4,
-                "product_url": "http://127.0.0.1:8080/product",
+                "product_url": "http://34.220.161.8/product",
                 "imgurl" : "https://static.bhphoto.com/images/images2500x2500/1548869076_1456228.jpg"
             },
             {
@@ -58,7 +58,7 @@ def process_results():
                 "price_high": 201.99,
                 "product_in_stock": True,
                 "product_id": 3,
-                "product_url": "http://127.0.0.1:8080/product",
+                "product_url": "http://34.220.161.8/product",
                 "imgurl" : "https://static.bhphoto.com/images/images2500x2500/1548869076_1456228.jpg"
             },
             {
@@ -68,7 +68,7 @@ def process_results():
                 "price_high": 201.99,
                 "product_in_stock": True,
                 "product_id": 5,
-                "product_url": "http://127.0.0.1:8080/product",
+                "product_url": "http://34.220.161.8/product",
                 "imgurl" : "https://static.bhphoto.com/images/images2500x2500/1548869076_1456228.jpg"
             },
             {
@@ -78,7 +78,7 @@ def process_results():
                 "price_high": 201.99,
                 "product_in_stock": True,
                 "product_id": 6,
-                "product_url": "http://127.0.0.1:8080/product",
+                "product_url": "http://34.220.161.8/product",
                 "imgurl" : "https://static.bhphoto.com/images/images2500x2500/1548869076_1456228.jpg"
             },
             {
@@ -88,7 +88,7 @@ def process_results():
                 "price_high": 201.99,
                 "product_in_stock": True,
                 "product_id": 7,
-                "product_url": "http://127.0.0.1:8080/product",
+                "product_url": "http://34.220.161.8/product",
                 "imgurl" : "https://static.bhphoto.com/images/images2500x2500/1548869076_1456228.jpg"
             }
         ]
