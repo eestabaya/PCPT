@@ -55,9 +55,10 @@
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}
-                <script>
-                    let msg = "{{ message }}";
-                    alert(msg);
+                <script type="text/javascript" src="/static/js/alertbox.js"></script>
+                <script type="text/javascript">
+                    let msg = "{{ message | safe }}";
+                    showAlert(msg);
                 </script>
             {% endfor %}
         {% endif %}
