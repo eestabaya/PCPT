@@ -32,7 +32,7 @@ def view_profile_page():
 
     if form.validate_on_submit():
 
-        if not user.check_password(form.password.data):
+        if not user.check_password(form.old_password.data):
             flash('Old password is incorrect!')
             return render_template("profile.html", user=user, data=user_json, form=form)
 
