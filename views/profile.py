@@ -6,7 +6,7 @@ from api.api import find_user
 mod = Blueprint('view_profile', __name__)
 
 
-@mod.route('/profile')
+@mod.route('/profile', methods=["GET", "POST"])
 def view_profile_page():
 
     user = current_user
@@ -23,5 +23,14 @@ def view_profile_page():
     }
 
     form = ChangePasswordForm()
+
+    if form.validate_on_submit():
+        old_password = form.old_password.data
+        new_password = form.new_password.data
+        cfm_password = form.new_password2.data
+
+        if not user.check_password(old_password):
+            # throw error
+            pass
 
     return render_template("profile.html", user=user, data=user_json, form=form)
