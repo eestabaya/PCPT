@@ -31,7 +31,7 @@ class User(UserMixin):
         :return:         None or User object
         """
 
-        user = find_user(username.lower(), email)
+        user = find_user(username, email)
 
         if user is None:
             return None
