@@ -48,8 +48,8 @@ def update_user(_id, salt=None, pw_hash=None, search=None):
 
 def find_user(username, email=False):
     if email:
-        return db["users"].find_one({"email": username})
-    return db["users"].find_one({"name_lower": username})
+        return db["users"].find_one({"email": username.lower()})
+    return db["users"].find_one({"name_lower": username.lower()})
 
 
 def create_user(u):

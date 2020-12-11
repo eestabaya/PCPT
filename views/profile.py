@@ -1,6 +1,7 @@
 from flask import Blueprint, redirect, render_template
 from flask_login import current_user
 from views.forms import ChangePasswordForm
+from api.api import find_user
 
 mod = Blueprint('view_profile', __name__)
 
@@ -9,33 +10,18 @@ mod = Blueprint('view_profile', __name__)
 def view_profile_page():
 
     user = current_user
-    
-    # do other things
-    test_json = {
-        "name": "John Doe",
-        "email": "jdoe@ucsd.edu",
-        "past_searches" : [
-            "graphics card",
-            "monitor",
-            "keyboard"
-        ]
-    }
-
-    form = ChangePasswordForm()
 
     if not user.is_authenticated:
-        # return redirect('/login')
-        return render_template("profile.html", user={"name": "John Doe", "email": "jdoe@ucsd.edu"}, data=test_json, form=form)
+        return redirect('/login')
+
+    mongo_user = find_user(user.name)
 
     user_json = {
         "name": user.name,
         "email": user.email,
-        "past_searches" : [
-            "graphics card",
-            "monitor",
-            "keyboard"
-        ]
+        "past_searches": mongo_user["search_history"]
     }
 
+    form = ChangePasswordForm()
 
     return render_template("profile.html", user=user, data=user_json, form=form)
