@@ -10,6 +10,8 @@ mod = Blueprint("login", __name__)
 
 @mod.route('/login', methods=["GET", "POST"])
 def login():
+
+    # Logged in? Send to home screen
     if current_user.is_authenticated:
         return redirect('/')
 

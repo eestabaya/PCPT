@@ -12,6 +12,7 @@ class User(UserMixin):
         :param pw_hash: User password hash
         :param pw:      User pure password (for new Users)
         """
+
         self.name = name
         self.name_lower = name.lower()
         self.email = email.lower()
