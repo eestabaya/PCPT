@@ -2,7 +2,6 @@ from flask import Blueprint, redirect, render_template, flash
 from flask_login import current_user
 from views.forms import ChangePasswordForm
 from api.api import find_user, update_user
-from utils.models import User
 
 mod = Blueprint('view_profile', __name__)
 
