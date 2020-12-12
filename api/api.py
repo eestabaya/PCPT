@@ -65,24 +65,30 @@ def create_user(u):
 
 
 @mod.route("/api/ABCDEHGFIOUEGUIEBUIABUIUA")
-def do_EVERYTHING():
-    gpu = get_gpu_prices()
-    cpu = get_cpu_prices()
+def log_scrape():
 
-    dict_reformat = {}
+    print("Processing GPUs")
+    gpu = get_gpu_prices()
+
+    print("Processing CPUs")
+    cpu = get_cpu_prices()
 
     for site in gpu:
         for product in site:
-            update_product(product, site.get(product), site)
+            arr = site.get(product)
+            price = arr[0]
+            link = arr[1]
+            update_product(product, price, site, link)
 
     for site in cpu:
         for product in site:
-            update_product(product, site.get(product), site)
+            arr = site.get(product)
+            price = arr[0]
+            link = arr[1]
+            update_product(product, price, site, link)
 
-    return {}
 
-
-def update_product(part_id, price, site):
+def update_product(part_id, price, site, link):
     finder = db["product"].find_one({"_id": part_id})
 
     if finder is None:
@@ -90,7 +96,10 @@ def update_product(part_id, price, site):
             {
                 "_id": part_id,
                 "stores": {
-                    site: price
+                    site: {
+                        "price": price,
+                        "link": link
+                    }
                 }
             }
         )
@@ -99,7 +108,8 @@ def update_product(part_id, price, site):
             {"_id": part_id},
             {
                 '$set': {
-                    'value' + site: price
+                    'stores.' + site + "price": price,
+                    'stores.' + site + "link": link
                 }
             }
         )
