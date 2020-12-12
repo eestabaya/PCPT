@@ -65,5 +65,7 @@ class User(UserMixin):
         self.salt = salt
         self.pw_hash = hashed
 
+        return salt, hashed
+
     def get_id(self):
         return self.name
