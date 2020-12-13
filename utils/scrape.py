@@ -105,7 +105,7 @@ def extract_bh_page(source):
         product_id = product_soup.find(
             lambda tag: tag.name == 'div' and tag.get('data-selenium') == 'miniProductPageProductSkuInfo').contents[
             0].split("#")
-        product_id = product_id[len(product_id) - 1]
+        product_id = product_id[len(product_id) - 1].strip()
 
         product_price_section = product_soup.find(
             lambda tag: tag.name == 'span' and tag.get('data-selenium') == 'uppedDecimalPrice')
