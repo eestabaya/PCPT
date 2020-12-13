@@ -18,6 +18,10 @@ def view_product_page():
         return render_template("error.html", user=user), 404
 
     product_json = get_product_from_mongo(item_id)
+
+    if product_json is None:
+        return render_template("error.html", user=user), 404
+
     name = product_json["name"]
     rating = 4
     img_url = product_json["picture"]
@@ -45,4 +49,4 @@ def view_product_page():
         "stores": stores
     }
 
-    return render_template("product.html", product=product, user=user)
+    return render_template("product.html", product=product, user=user, item_id=item_id)

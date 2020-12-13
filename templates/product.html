@@ -14,11 +14,14 @@
                         <i class="fas fa-star" id="star4"></i>
                         <i class="fas fa-star" id="star5"></i>
                     </div>
-                    <div class="product-img">            
+                    <div class="product-img">
                         <img src="{{ product.product_imgurl }}">
                     </div>
-                    <a href="#" id="btn"> Add to My Config</a>
-            
+
+                    {% if user and item_id %}
+                        <a href="/addtoconfig?item_id={{ item_id }}" id="btn">Add to My Config</a>
+                    {% endif %}
+
                 </div>
                 <div class="column2">
                     <h2>Product Details</h2>
@@ -43,15 +46,10 @@
                         {% for site in product.stores %}
                         <tr>
                           <td>
-                          <img id="iconimg" src="{{ site.store_iconurl }}"> <!-- TODO -->
-                          <th>{{site}}</th>
-                          <td><a href="{{ site.store_url }}">Store Page</a></td>
-                          {% if product.stores[site].product_in_stock %}
-                            <td>In Stock</td>
-                          {% else %}
-                            <td>Out of Stock</td>
-                          {% endif %}
-                          <td>${{ product.stores[site].product_price}}</td>
+                          <img id="iconimg" src="{{ site.store_iconurl }}">
+                          <th>{{ site }}</th>
+                          <td><a href="http://{{ product.stores[site].store_url }}" target="_blank">Store Page</a></td>
+                          <td>{{ product.stores[site].product_price }}</td>
                         </tr>
                         {% endfor %}
                     </table>
@@ -74,7 +72,7 @@
             </script>
         </div>
     <script>
-        var rating = {{product.product_rating}};
+        var rating = {{ product.product_rating }};
         switch(rating){
             case 5:
                 $('#star5').toggleClass('blue');
@@ -244,5 +242,4 @@
             background: #FFADAD;
         }
     </style>
-    <script src="/static/js/request.js"></script>
 {% endblock %}
