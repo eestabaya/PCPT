@@ -18,23 +18,7 @@
                 <p style="color: #FFADAD; font-size: 20px; margin-top:-5px;margin-left: 20px;">{{ brandname }}</p>
             </div>
             {% endfor %}
-            <h3>Price Range</h3>
-            <script>
-                $( function() {
-                  $( "#slider-range" ).slider({
-                    range: true,
-                    min: 0,
-                    max: 1000,
-                    values: [ 100, 300 ],
-                    slide: function( event, ui ) {
-                      $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-                    }
-                  });
-                  $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-                    " - $" + $( "#slider-range" ).slider( "values", 1 ) );
-                } );
-                </script>
-              </head>
+
               <body>
 
               <p style="color: #FFADAD; font-size: 20px; margin-top:-5px;margin-left: 20px; width:180px">
@@ -62,9 +46,9 @@
                         </a>
                     </div>
                     <script>
-                        let rating = "{{ product.product_rating }}";
-                        console.log(rating);
-                        switch (rating) {
+                        let stars = "{{ product.product_rating }}";
+                        console.log(stars);
+                        switch (stars) {
                             case "5":
                                 $('.item{{product.product_id}} #star5').toggleClass('blue');
                             case "4":
