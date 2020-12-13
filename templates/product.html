@@ -3,93 +3,81 @@
 
 {% block content %}
 
-        <div class="container">
-            <h2>{{ product.product_name }}</h2>
-            <div class="container-cols">
-                <div class="gallery-container">
-                    <div class="rating">
-                        <i class="fas fa-star" id="star1"></i>
-                        <i class="fas fa-star" id="star2"></i>
-                        <i class="fas fa-star" id="star3"></i>
-                        <i class="fas fa-star" id="star4"></i>
-                        <i class="fas fa-star" id="star5"></i>
-                    </div>
-                    <div class="product-img">
-                        <img src="{{ product.product_imgurl }}">
-                    </div>
-
-                    {% if user and item_id %}
-                        <a href="/addtoconfig?item_id={{ item_id }}" id="btn">Add to My Config</a>
-                    {% endif %}
-
+    <div class="container">
+        <h2>{{ product.product_name }}</h2>
+        <div class="container-cols">
+            <div class="gallery-container">
+                <div class="rating">
+                    <i class="fas fa-star" id="star1"></i>
+                    <i class="fas fa-star" id="star2"></i>
+                    <i class="fas fa-star" id="star3"></i>
+                    <i class="fas fa-star" id="star4"></i>
+                    <i class="fas fa-star" id="star5"></i>
                 </div>
-                <div class="column2">
-                    <h2>Product Details</h2>
-                    <p class="detailsTxt">
-                            Model Number: RX-580P826D6<br>
-                            Base Clock: 1366MHz<br>
-                            Boost Clock: 1386MHz<br>
-                            Stream Processors: 2304<br>
-                            Memory Bus: 256 bit<br>
-                            Memory Base Clock: 8.0GHz<br>
-                            Memory Boost Clock: 8.1GHz<br>
-                            Memory Size: 8GB<br>
-                            Memory Type: DDR5<br>
-                            Slots: 2<br>
-                            Minimum PSU: 500W<br>
-                            Power Cable: 1x 8 Pin<br>
-                            Outputs: 3x Displayport, 1x HDMI, 1x DVI-D<br><br>
-                        {{ product.product_description }}
-                    </p>
-                    <h2>Product Prices</h2>
-                    <table>
-                        {% for site in product.stores %}
-                        <tr>
-                          <td>
-                          <img id="iconimg" src="{{ site.store_iconurl }}">
-                          <th>{{ site }}</th>
-                          <td><a href="http://{{ product.stores[site].store_url }}" target="_blank">Store Page</a></td>
-                          <td>{{ product.stores[site].product_price }}</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                    <h2>Price History</h2>
-                    <canvas id="myChart" width="1000px" height="700px"></canvas>
+                <div class="product-img">
+                    <img src="{{ product.product_imgurl }}">
                 </div>
+
+                {% if user and item_id %}
+                    <a href="/addtoconfig?item_id={{ item_id }}" id="btn">Add to My Config</a>
+                {% endif %}
+
             </div>
-            <script>
-                var ctx = document.getElementById('myChart').getContext('2d');
-                var myChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: ['Jan 20','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct 20'],
-                        datasets: [{ 
-                            label: "Price History",
-                            data: [120,114,106,106,107,111,133,120,110,120]
-                        }]
-                    }
-                });
-            </script>
+            <div class="column2">
+                <h2>Product Details</h2>
+                <p class="detailsTxt">
+                    Model Number: RX-580P826D6<br>
+                    Base Clock: 1366MHz<br>
+                    Boost Clock: 1386MHz<br>
+                    Stream Processors: 2304<br>
+                    Memory Bus: 256 bit<br>
+                    Memory Base Clock: 8.0GHz<br>
+                    Memory Boost Clock: 8.1GHz<br>
+                    Memory Size: 8GB<br>
+                    Memory Type: DDR5<br>
+                    Slots: 2<br>
+                    Minimum PSU: 500W<br>
+                    Power Cable: 1x 8 Pin<br>
+                    Outputs: 3x Displayport, 1x HDMI, 1x DVI-D<br><br>
+                    {{ product.product_description }}
+                </p>
+                <h2>Product Prices</h2>
+                <table>
+                    {% for site in product.stores %}
+                        <tr>
+                            <td>
+                                <img id="iconimg" src="{{ site.store_iconurl }}">
+                            <th>{{ site }}</th>
+                            <td><a href="http://{{ product.stores[site].store_url }}" target="_blank">Store Page</a>
+                            </td>
+                            <td>{{ product.stores[site].product_price }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <h2>Price History</h2>
+                <canvas id="myChart" width="1000px" height="700px"></canvas>
+            </div>
         </div>
+    </div>
+
     <script>
-        var rating = {{ product.product_rating }};
-        switch(rating){
-            case 5:
+        let rating = "{{ product.product_rating }}";
+        switch (rating) {
+            case "5.0":
                 $('#star5').toggleClass('blue');
-            case 4:
+            case "4.0":
                 $('#star4').toggleClass('blue');
-            case 3:
+            case "3.0":
                 $('#star3').toggleClass('blue');
-            case 2:
+            case "2.0":
                 $('#star2').toggleClass('blue');
-            case 1:
+            case "1.0":
                 $('#star1').toggleClass('blue');
-            case 0:
         }
     </script>
     <style>
 
-        h1{
+        h1 {
             font-family: DM Mono;
             font-style: normal;
             font-weight: normal;
@@ -99,7 +87,7 @@
             color: #000000;
         }
 
-        h2{
+        h2 {
             font-family: DM Mono;
             font-style: normal;
             font-weight: normal;
@@ -109,42 +97,42 @@
             color: #000000;
         }
 
-        #btn{
-            
+        #btn {
+
             margin-top: 40px;
-                    background: #FFADAD;
-                    border-radius: 50px;         
-                    width: 240px;
-                    height: 60px;
-                    font-family: DM Mono;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 20px;
-                    line-height: 36px;
-                    display: flex;
-                    align-items: center;
-                    text-align: center;
-                    justify-content: center;
-                    text-decoration: none;
-                    color: #FFFFFF;
+            background: #FFADAD;
+            border-radius: 50px;
+            width: 240px;
+            height: 60px;
+            font-family: DM Mono;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 20px;
+            line-height: 36px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #FFFFFF;
         }
 
-        p{
+        p {
             font-size: 18px;
         }
 
-        .detailsTxt{
+        .detailsTxt {
             overflow-y: scroll;
-            height:400px;
+            height: 400px;
         }
 
-        #iconimg{
-            height:20px;
+        #iconimg {
+            height: 20px;
             width: 20px;
         }
 
-        .blue{
-            color:#ffadad
+        .blue {
+            color: #ffadad
         }
 
         ::-webkit-scrollbar {
@@ -158,64 +146,64 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #FFADAD;  
+            background: #FFADAD;
             border-radius: 10px;
         }
 
-        .container{
-            margin-left:5vw;
+        .container {
+            margin-left: 5vw;
         }
 
-        .container-cols{
+        .container-cols {
             display: flex;
             justify-content: space-between;
             flex-direction: row;
-            width:1100px
+            width: 1100px
         }
 
-        .column2{
-            margin-left:100px;
-            width:700px
+        .column2 {
+            margin-left: 100px;
+            width: 700px
         }
 
-        .column2 table{
+        .column2 table {
             background-color: #ffffff;
-            width:700px;
-            height:160px;
-            padding:20px;
+            width: 700px;
+            height: 160px;
+            padding: 20px;
             border-radius: 10px;
         }
 
-        
+
         th, td {
-        padding: 10px;
+            padding: 10px;
         }
 
-        .rating{
-            display:flex;
+        .rating {
+            display: flex;
             flex-direction: row;
             justify-content: space-between;
             flex-basis: content;
-            width:100px;
-            height:20px;
-            top:-20px;
+            width: 100px;
+            height: 20px;
+            top: -20px;
             margin-bottom: 30px;
         }
 
         .rating img {
-            height:20px;
-            width:20px;
+            height: 20px;
+            width: 20px;
         }
 
-        .gallery, img{
-            width:15vw;
-            height:15vw;
+        .gallery, img {
+            width: 15vw;
+            height: 15vw;
         }
 
-        .button{
+        .button {
             margin-top: 40px;
             background: #FFADAD;
-            border-radius: 50px;         
+            border-radius: 50px;
             width: 300px;
             height: 60px;
             font-family: DM Mono;
@@ -230,7 +218,7 @@
             color: #FFFFFF;
         }
 
-        .footer{
+        .footer {
             position: absolute;
             width: 100%;
             height: 15%;
