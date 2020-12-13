@@ -51,7 +51,7 @@
                           {% else %}
                             <td>Out of Stock</td>
                           {% endif %}
-                          <td>${{ product.stores[site].product_price}}</td>
+                          <td>{{ product.stores[site].product_price }}</td>
                         </tr>
                         {% endfor %}
                     </table>
