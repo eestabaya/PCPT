@@ -33,11 +33,11 @@ def view_config_page():
             }
         }
     }
-    
 
     # Check if user is authenticated
     user = current_user
     if not user.is_authenticated:
+        # return redirect('/login')
         return render_template("configuration.html", configs=test_config)
 
     # Get all system configuration data for user in database
