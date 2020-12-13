@@ -88,4 +88,4 @@ def compute_ranges(sites_dict):
         if high == -1 or price > high:
             high = price
 
-    return low, high, (rating_sum / site_count)
+    return low, high, int(rating_sum / site_count)

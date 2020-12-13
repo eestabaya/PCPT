@@ -61,4 +61,4 @@ def average_rating(sites_dict):
         site_count = site_count + 1
         rating_sum = rating_sum + sites_dict[site]["rating"]
 
-    return rating_sum / site_count
+    return int(rating_sum / site_count)
