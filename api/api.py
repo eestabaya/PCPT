@@ -66,7 +66,7 @@ def get_from_database():
     product_id = request.args.get('key')
 
     if product_id is None or product_id is "" or product_id.isspace():
-        return {"success": "false", "reason": "Missing key parameter"}
+        return {"success": "false", "reason": "Missing key parameter"}, 400
 
     product = db["product"].find_one({"_id": product_id})
 
