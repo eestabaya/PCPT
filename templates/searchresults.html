@@ -62,29 +62,20 @@
                         </a>
                     </div>
                     <script>
-                        let rating = {{product.product_rating}};
+                        let rating = "{{ product.product_rating }}";
+                        console.log(rating);
                         switch (rating) {
-                            case 5:
+                            case "5":
                                 $('.item{{product.product_id}} #star5').toggleClass('blue');
-                                break;
-                            case 4:
+                            case "4":
                                 $('.item{{product.product_id}} #star4').toggleClass('blue');
-                                break;
-                            case 3:
+                            case "3":
                                 $('.item{{product.product_id}} #star3').toggleClass('blue');
-                                break;
-                            case 2:
+                            case "2":
                                 $('.item{{product.product_id}} #star2').toggleClass('blue');
-                                break;
-                            case 1:
+                            case "1":
                                 $('.item{{product.product_id}} #star1').toggleClass('blue');
-                                break;
                         }
-                        {% for brandname in var.brandnames %}
-                            $('input #{{brandname}}').click({
-                                $("product").filter("#{{brandname}}").hide();
-                            });
-                        {% endfor %}
                     </script>
                 {% endfor %}
             </div>
@@ -92,6 +83,8 @@
         {% endif %}
 
     </div>
+
+    <script src="/static/js/filterResults.js"></script>
 
     <style>
         h1 {
