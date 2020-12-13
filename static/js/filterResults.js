@@ -1,10 +1,18 @@
+
+
 $(document).ready(function () {
-    $("input:checkbox").on("change", function () {
-        let a = $("input:checkbox:checked").val();
-        if ($(this).prop("checked")) {
-            $(".product:not(:contains(" + a + "))").hide();
-        } else {
-            $(".product").show();
-        }
+    $('.products').show();
+
+    $('.filter').find('input:checkbox').on('click', function() {
+       let $prod = $('.product').hide();
+       let $elem = $('.filter').find('input:checked');
+
+       $prod
+           .filter(function() {
+               let $pr = $(this);
+               return $elem.toArray().every(function(element) {
+                   return $pr.hasClass($(element).attr('value'));
+               });
+           }).show();
     });
 });
