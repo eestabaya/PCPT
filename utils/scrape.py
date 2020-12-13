@@ -128,8 +128,8 @@ def extract_bh_page(source):
 
         rating_section = product_soup.find(
             lambda tag: tag.name == 'div' and tag.get('data-selenium') == 'ratingContainer')
+        product_rating = 0
         if rating_section is not None:
-            product_rating = 0
             for star in rating_section.contents:
                 if len(star.get('class')) == 3:
                     product_rating += 1
