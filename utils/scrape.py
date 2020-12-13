@@ -4,8 +4,22 @@
 
 import bs4
 import time
+from random import choice
+import requests
 
 from selenium import webdriver
+
+desktop_agents = [
+    'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/602.2.14 (KHTML, like Gecko) Version/10.0.1 Safari/602.2.14',
+    'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0']
 
 store_urls = {
     'adorama':
@@ -18,6 +32,16 @@ store_urls = {
         {'gpu': "https://www.newegg.com/p/pl?N=100007709%208000&PageSize=96&Order=1",
          'cpu': "https://www.newegg.com/p/pl?N=100007671%208000&PageSize=96&Order=1"}
 }
+
+
+def random_headers():
+    return {'User-Agent': choice(desktop_agents),
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'}
+
+
+def extract_source_requests(url):
+    source = requests.get(url, headers=random_headers()).text
+    return source
 
 
 def get_webdriver():
@@ -78,15 +102,15 @@ def extract_bh_page(source):
     for product in products:
         product_soup = bs4.BeautifulSoup(str(product), 'lxml')
 
-        product_name = product_soup.find(
+        product_id = product_soup.find(
             lambda tag: tag.name == 'div' and tag.get('data-selenium') == 'miniProductPageProductSkuInfo').contents[
             0].split("#")
-        product_name = product_name[len(product_name) - 1]
+        product_id = product_id[len(product_id) - 1].strip()
 
         product_price_section = product_soup.find(
             lambda tag: tag.name == 'span' and tag.get('data-selenium') == 'uppedDecimalPrice')
         if product_price_section is None:
-            print("Price unavailable: " + product_name)
+            print("Price unavailable: " + product_id)
             continue
         product_price = product_price_section.contents[0].contents[0] + "." + \
                         product_price_section.contents[1].contents[0]
@@ -94,7 +118,22 @@ def extract_bh_page(source):
         product_link = 'www.bhphotovideo.com' + product_soup.find(
             lambda tag: tag.name == 'a' and tag.get('data-selenium') == 'miniProductPageProductNameLink').get('href')
 
-        part_num_to_data[product_name] = [product_price, product_link]
+        product_name = product_soup.find(
+            lambda tag: tag.name == 'span' and tag.get('data-selenium') == 'miniProductPageProductName').contents[0]
+
+        product_picture = product_soup.find(
+            lambda tag: tag.name == 'img' and tag.get('data-selenium') == 'miniProductPageImg')
+        if product_picture is not None:
+            product_picture = product_picture.get('src')
+
+        rating_section = product_soup.find(
+            lambda tag: tag.name == 'div' and tag.get('data-selenium') == 'ratingContainer')
+        product_rating = 0
+        if rating_section is not None:
+            for star in rating_section.contents:
+                if len(star.get('class')) == 3:
+                    product_rating += 1
+        part_num_to_data[product_id] = [product_price, product_name, product_link, product_picture, product_rating]
 
     return part_num_to_data
 
@@ -152,8 +191,10 @@ def extract_newegg_page(source):
                 pass
             rounded_part_price = f"${part_price:.2f}"
 
+            part_url = product_soup.find(class_='item-title').get('href')
+
             if part_num is not None and rounded_part_price is not None:
-                part_num_to_data[part_num] = rounded_part_price
+                part_num_to_data[part_num] = [rounded_part_price, part_url]
 
         except Exception as e:
             print(e)
@@ -164,13 +205,15 @@ def extract_newegg_page(source):
 def scrape_bh_category(category_url):
     """given a B&H category's url, scrapes all pages and returns a dictionary with format { part # : price } of all
     products in category"""
-    driver = get_webdriver()
-    num_products = extract_bh_num_results(extract_source(category_url, driver))
+    # driver = get_webdriver()
+    # num_products = extract_bh_num_results(extract_source(category_url, driver))
+    num_products = extract_bh_num_results(extract_source_requests(category_url))
     part_num_to_data = {}
     for i in range(1, (num_products - 1) // 30 + 2):
-        page_data = extract_bh_page(extract_source(category_url + "/pn/" + str(i), driver))
+        # page_data = extract_bh_page(extract_source(category_url + "/pn/" + str(i), driver))
+        page_data = extract_bh_page(extract_source_requests(category_url + "/pn/" + str(i)))
         part_num_to_data.update(page_data)
-    driver.close()
+    # driver.close()
     return part_num_to_data
 
 
@@ -190,13 +233,15 @@ def scrape_adorama_category(category_url):
 def scrape_newegg_category(category_url):
     """given a Newegg category's URL, scrapes all pages and returns a dictionary with format { part # : price } of
     all products in a category"""
-    driver = get_webdriver()
-    num_pages = extract_newegg_num_pages(extract_source(category_url, driver))
+    # driver = get_webdriver()
+    # num_pages = extract_newegg_num_pages(extract_source(category_url, driver))
+    num_pages = extract_newegg_num_pages(extract_source_requests(category_url))
     part_num_to_data = {}
     for i in range(1, num_pages):
-        page_data = extract_newegg_page(extract_source(category_url + "&page=" + str(i), driver))
+        # page_data = extract_newegg_page(extract_source(category_url + "&page=" + str(i), driver))
+        page_data = extract_newegg_page(extract_source_requests(category_url + "&page=" + str(i)))
         part_num_to_data.update(page_data)
-    driver.close()
+    # driver.close()
     return part_num_to_data
 
 
@@ -204,7 +249,7 @@ def get_gpu_prices():
     gpu_prices = {}
     # gpu_prices['adorama'] = scrape_adorama_category(store_urls['adorama']['gpu'])
     gpu_prices['bhphotovideo'] = scrape_bh_category(store_urls['bhphotovideo']['gpu'])
-    # gpu_prices['newegg'] = scrape_newegg_category(store_urls['newegg']['gpu'])
+    #gpu_prices['newegg'] = scrape_newegg_category(store_urls['newegg']['gpu'])
     return gpu_prices
 
 
@@ -212,5 +257,5 @@ def get_cpu_prices():
     cpu_prices = {}
     # cpu_prices['adorama'] = scrape_adorama_category(store_urls['adorama']['cpu'])
     cpu_prices['bhphotovideo'] = scrape_bh_category(store_urls['bhphotovideo']['cpu'])
-    # cpu_prices['newegg'] = scrape_newegg_category(store_urls['newegg']['cpu'])
+    #cpu_prices['newegg'] = scrape_newegg_category(store_urls['newegg']['cpu'])
     return cpu_prices

@@ -12,6 +12,7 @@ class User(UserMixin):
         :param pw_hash: User password hash
         :param pw:      User pure password (for new Users)
         """
+
         self.name = name
         self.name_lower = name.lower()
         self.email = email.lower()
@@ -31,7 +32,7 @@ class User(UserMixin):
         :return:         None or User object
         """
 
-        user = find_user(username.lower(), email)
+        user = find_user(username, email)
 
         if user is None:
             return None
@@ -64,6 +65,8 @@ class User(UserMixin):
 
         self.salt = salt
         self.pw_hash = hashed
+
+        return salt, hashed
 
     def get_id(self):
         return self.name

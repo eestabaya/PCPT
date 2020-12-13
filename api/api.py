@@ -1,10 +1,6 @@
-import uuid
-
-from flask import Blueprint
+from flask import Blueprint, request
 
 from utils.db_config import db
-
-from utils.scrape import get_gpu_prices, get_cpu_prices
 
 mod = Blueprint("api_stuff", __name__)
 
@@ -16,6 +12,10 @@ def get_from_mongo(col="test"):
         return {"success": "true", "items": items}
     except Exception as e:
         return {"success": "false", "cause": str(e)}
+
+
+def get_product_from_mongo(model_num):
+    return db["product"].find_one({"_id": model_num})
 
 
 def update_user(_id, salt=None, pw_hash=None, search=None):
@@ -48,8 +48,8 @@ def update_user(_id, salt=None, pw_hash=None, search=None):
 
 def find_user(username, email=False):
     if email:
-        return db["users"].find_one({"email": username})
-    return db["users"].find_one({"name_lower": username})
+        return db["users"].find_one({"email": username.lower()})
+    return db["users"].find_one({"name_lower": username.lower()})
 
 
 def create_user(u):
@@ -64,156 +64,14 @@ def create_user(u):
     db["users"].insert_one(data)
 
 
-@mod.route("/api/ABCDEHGFIOUEGUIEBUIABUIUA")
-def do_EVERYTHING():
-    gpu = get_gpu_prices()
-    cpu = get_cpu_prices()
+@mod.route("/api/product")
+def get_from_database():
 
-    dict_reformat = {}
+    product_id = request.args.get('model_num')
 
-    for site in gpu:
-        for product in site:
-            update_product(product, site.get(product), site)
-
-    for site in cpu:
-        for product in site:
-            update_product(product, site.get(product), site)
-
-    return {}
-
-
-def update_product(part_id, price, site):
-    finder = db["product"].find_one({"_id": part_id})
-
-    if finder is None:
-        db["product"].insert(
-            {
-                "_id": part_id,
-                "stores": {
-                    site: price
-                }
-            }
-        )
-    else:
-        db["product"].update(
-            {"_id": part_id},
-            {
-                '$set': {
-                    'value' + site: price
-                }
-            }
-        )
-
-
-def add_scraped_product(_id="", product_name="some product", product_type="computer thing", product_rating=0.0,
-                        product_brand="brand"):
-    # TODO pass in product's ID, name, type, rating, and brand
-    _id = 0
-    """
-    product_name = "test product"
-    product_type = "computer thing"
-    product_rating = 0.0
-    product_brand = "brand"
-    """
-
-    # TODO pass in store data
-    store_id = 0
-    product_price = 0.0
-    store_url = "https://store.com/product"
-
-    # TODO pass in date
-    date = "placeholder"
-
-    # product exists, update its Store field
-    if db.product.find({"_id": _id}).count > 0:
-
-        db.product.update(
-            {"_id": _id},
-            {
-                "$push": {
-                    "stores":
-                        {
-                            "store_id": store_id,
-                            "product_price": product_price,
-                            "store_url": store_url
-                        },
-
-                    "hist_price_data":
-                        {
-                            "product_price": product_price,
-                            "date": date
-                        }
-                }
-            }
-        )
-
-    # product does not exist, add it to the database
-    else:
-        db.product.insert(
-            {
-                "_id": _id,
-                "product_name": product_name,
-                "product_type": product_type,
-                "product_rating": product_rating,
-                "product_brand": product_brand,
-                "stores":
-                    [
-                        {
-                            "store_id": store_id,
-                            "product_price": product_price,
-                            "store_url": store_url
-                        }
-                    ],
-                "hist_price_data":
-                    [
-                        {
-                            "product_price": product_price,
-                            "date": date
-                        }
-                    ]
-            }
-        )
-    return {"success": "true"}
-
-
-@mod.route("/api/products/<product_id>")
-def get_from_database(product_id):
-    """ TODO
-    e = db["product"].find({"product_id": product_id})
-    items = [i for i in e]
-    print(items)
-
-    print(type(e))
-
-    for i in e:
-        items.append(i)
-
-    for x in e:
-        print(x)
-
-    return {"something": items}
-    """
+    if product_id is None or product_id is "" or product_id.isspace():
+        return {"success": "false", "reason": "Missing model_num parameter"}, 400
 
     product = db["product"].find_one({"_id": product_id})
-    print(product)
-    return {}
 
-
-# @mod.route("/api/<uid>")
-def get_stuff(uid):
-    return {"success": True, "uid": uid, "new_uid": str(uuid.uuid4())}
-
-
-# TODO placeholder stuff
-@mod.route("/api/scrape")
-def get_from_scrape():
-    # items = []
-    # for item in scr:
-    # items.append(item)
-    return {"success": "false", "cause": "yes"}
-
-
-# TODO placeholder stuff
-@mod.route("/api/load")
-def load_stuff():
-    return {"success": True}
+    return {"success": "true", "product": product}

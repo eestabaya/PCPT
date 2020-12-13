@@ -45,14 +45,15 @@
     <div class="searchHist">
         <h2>Search History</h2>
         {% for term in data.past_searches %}
-        <a href="/search" style="text-decoration: none; color: #000000;">
-        <div id="term" style="margin-bottom: 20px;">
-            <p>{{term}}</p>
-        </div></a>
+            <a href="/search" style="text-decoration: none; color: #000000;">
+            <div id="term" style="margin-bottom: 20px;">
+                <p>{{ term }}</p>
+            </div></a>
         {% endfor %}
-    </div></div>
+    </div>
+
     <style>
-    
+
     .profile-module, .searchHist{
         background-color: #ffadad;
         height: 600px;
@@ -105,12 +106,22 @@
         margin-left:0px
     }
 
-    #new_password2,#new_password,#old_password,#term{
+    #new_password2,#new_password,#old_password{
         height:40px;
         border-radius: 10px;
         width:430px;
         border:none;
         background: #ffeded;
+    }
+
+    #term{
+        height:40px;
+        border-radius: 10px;
+        width:430px;
+        border:none;
+        background: #ffeded;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     #submit{  

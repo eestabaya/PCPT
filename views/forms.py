@@ -30,15 +30,16 @@ class RegistrationForm(FlaskForm):
         name = username.data
         sanitized = re.sub(r'\W+', '*', name)
 
+        # Sanitize username, ensure it is alphanumeric with underscore
         if name is not sanitized:
             self.username.errors.append('Invalid username.')
             return False
 
+        # Check if username is already being used
         user = User.get_user(name)
         if user is not None:
             self.username.errors.append('Username already in use.')
             return False
-
         return True
 
     def validate_email(self, email):
@@ -46,15 +47,15 @@ class RegistrationForm(FlaskForm):
         if user is not None:
             self.email.errors.append('Email already in use.')
             return False
-
         return True
+
 
 class ChangePasswordForm(FlaskForm):
     old_password = PasswordField('Old Password', validators=[DataRequired()])
-    new_password = PasswordField('New Password', validators=[DataRequired()])
-    new_password2 = PasswordField(
-        'Repeat New Password', validators=[DataRequired(), EqualTo('new_password2', message='Passwords do not match.')])
+    new_password = PasswordField('New Password', validators=[DataRequired(), EqualTo('new_password2', message='Passwords do not match.')])
+    new_password2 = PasswordField('Repeat Password', validators=[DataRequired()])
     submit = SubmitField('Change Password')
+
 
 class ForgotPasswordForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -64,5 +65,4 @@ class ForgotPasswordForm(FlaskForm):
         if user is None:
             self.email.errors.append('Could not find account.')
             return False
-
         return True

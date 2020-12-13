@@ -10,16 +10,6 @@
             <h1>Welcome to PCPT!</h1>
         {% endif %}
 
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <ul>
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endwith %}
-
         <div class="gallery-container">
             <h2>Featured Items</h2>
             <div class="gallery">

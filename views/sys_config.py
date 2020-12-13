@@ -35,7 +35,6 @@ def view_config_page():
     }
     
 
-
     # Check if user is authenticated
     user = current_user
     if not user.is_authenticated:
