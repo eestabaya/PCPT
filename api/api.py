@@ -60,7 +60,7 @@ def create_user(u):
     db["users"].insert_one(data)
 
 
-@mod.route("/api/products")
+@mod.route("/api/product")
 def get_from_database():
 
     product_id = request.args.get('key')
