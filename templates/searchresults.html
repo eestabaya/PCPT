@@ -21,7 +21,6 @@
         </div>
 
         {% if var %}
-
             <div class="products">
                 {% for product in var.products %}
                     <div class="product" id="{{ product.model }} {{ product.brandname }}">
@@ -39,8 +38,7 @@
                         </a>
                     </div>
                     <script>
-                        let stars = "{{ product.product_rating }}";
-                        console.log(stars);
+                        stars = "{{ product.product_rating }}";
                         switch (stars) {
                             case "5":
                                 $('.item{{product.product_id}} #star5').toggleClass('blue');
@@ -56,7 +54,6 @@
                     </script>
                 {% endfor %}
             </div>
-
         {% endif %}
 
     </div>
