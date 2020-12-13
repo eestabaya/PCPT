@@ -1,7 +1,7 @@
 
 
 $(document).ready(function () {
-    $('.products').show();
+    $('.product').show();
 
     $('.filter').find('input:checkbox').on('click', function() {
        let $prod = $('.product').hide();
