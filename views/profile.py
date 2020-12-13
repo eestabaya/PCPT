@@ -19,9 +19,9 @@ def view_profile_page():
     mongo_user = find_user(user.name)
     search_history = mongo_user["search_history"]
 
-    # Truncate search history to past 9 searches
-    if len(search_history) > 9:
-        del search_history[9:]
+    # Truncate search history to past 8 searches
+    if len(search_history) > 8:
+        del search_history[8:]
 
     name = user.name
     email = user.email
