@@ -8,7 +8,7 @@ mod = Blueprint("view_product", __name__)
 @mod.route("/product", methods=["GET"])
 def view_product_page():
 
-    item_id = request.args.get('id')
+    item_id = request.args.get('item_id')
 
     user = None
     if current_user.is_authenticated:
