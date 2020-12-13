@@ -17,6 +17,9 @@ def forgot_password():
     if form.validate_on_submit():
         user = User.get_user(form.email.data, email=True)
 
+        # Clear field
+        form.email.data = ""
+
         # Send the reset email
         email = user.email
         flash(f"Password reset instructions has been sent to {email}.")
