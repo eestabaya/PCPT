@@ -23,7 +23,7 @@ def view_product_page():
         return render_template("error.html", user=user), 404
 
     name = product_json["name"]
-    rating = 4
+    rating = average_rating(product_json["stores"])
     img_url = product_json["picture"]
 
     if img_url is None:
@@ -50,3 +50,15 @@ def view_product_page():
     }
 
     return render_template("product.html", product=product, user=user, item_id=item_id)
+
+
+def average_rating(sites_dict):
+
+    site_count = 0
+    rating_sum = 0
+
+    for site in sites_dict:
+        site_count = site_count + 1
+        rating_sum = rating_sum + sites_dict[site]["rating"]
+
+    return rating_sum / site_count
