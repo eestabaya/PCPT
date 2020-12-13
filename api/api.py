@@ -1,10 +1,6 @@
-import uuid
-
-from flask import Blueprint
+from flask import Blueprint, request
 
 from utils.db_config import db
-
-from utils.scrape import get_gpu_prices, get_cpu_prices
 
 mod = Blueprint("api_stuff", __name__)
 
@@ -64,44 +60,14 @@ def create_user(u):
     db["users"].insert_one(data)
 
 
-@mod.route("/api/products/<product_id>")
-def get_from_database(product_id):
-    """ TODO
-    e = db["product"].find({"product_id": product_id})
-    items = [i for i in e]
-    print(items)
+@mod.route("/api/products")
+def get_from_database():
 
-    print(type(e))
+    product_id = request.args.get('key')
 
-    for i in e:
-        items.append(i)
-
-    for x in e:
-        print(x)
-
-    return {"something": items}
-    """
+    if product_id is None or product_id is "" or product_id.isspace():
+        return {"success": "false", "reason": "Missing key parameter"}
 
     product = db["product"].find_one({"_id": product_id})
-    print(product)
-    return {}
 
-
-# @mod.route("/api/<uid>")
-def get_stuff(uid):
-    return {"success": True, "uid": uid, "new_uid": str(uuid.uuid4())}
-
-
-# TODO placeholder stuff
-@mod.route("/api/scrape")
-def get_from_scrape():
-    # items = []
-    # for item in scr:
-    # items.append(item)
-    return {"success": "false", "cause": "yes"}
-
-
-# TODO placeholder stuff
-@mod.route("/api/load")
-def load_stuff():
-    return {"success": True}
+    return {"success": "true", "product": product}
