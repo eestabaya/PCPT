@@ -30,14 +30,14 @@
                         <tr>
                           <td>
                           <img id="iconimg" src="{{ product.stores[site].store_iconurl }}"> <!-- TODO -->
-                          <th>{{site}}</th>
-                          <td><a href="{{ product.stores[site].store_url }}">Store Page</a></td>
+                          <th>{{ site }}</th>
+                          <td><a href="http://{{ product.stores[site].store_url }}">Store Page</a></td>
                           {% if product.stores[site].product_in_stock %}
                             <td>In Stock</td>
                           {% else %}
                             <td>Out of Stock</td>
                           {% endif %}
-                          <td>${{ product.stores[site].product_price}}</td>
+                          <td>{{ product.stores[site].product_price }}</td>
                         </tr>
                         {% endfor %}
                     </table>
