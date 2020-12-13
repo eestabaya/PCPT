@@ -27,7 +27,7 @@ def process_results():
 
     for item in data:
         try:
-            if query.lower() in item["_id"].lower():
+            if query.lower() in item["name"].lower():
                 items.append(item)
         except:
             continue
