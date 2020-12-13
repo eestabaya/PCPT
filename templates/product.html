@@ -26,20 +26,9 @@
             <div class="column2">
                 <h2>Product Details</h2>
                 <p class="detailsTxt">
-                    Model Number: RX-580P826D6<br>
-                    Base Clock: 1366MHz<br>
-                    Boost Clock: 1386MHz<br>
-                    Stream Processors: 2304<br>
-                    Memory Bus: 256 bit<br>
-                    Memory Base Clock: 8.0GHz<br>
-                    Memory Boost Clock: 8.1GHz<br>
-                    Memory Size: 8GB<br>
-                    Memory Type: DDR5<br>
-                    Slots: 2<br>
-                    Minimum PSU: 500W<br>
-                    Power Cable: 1x 8 Pin<br>
-                    Outputs: 3x Displayport, 1x HDMI, 1x DVI-D<br><br>
-                    {{ product.product_description }}
+                    {% for line in product.product_description %}
+                        {{ line }}<br>
+                    {% endfor %}
                 </p>
                 <h2>Product Prices</h2>
                 <table>

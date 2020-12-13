@@ -46,6 +46,7 @@ def view_product_page():
         "product_name": name,
         "product_rating": rating,
         "product_imgurl": img_url,
+        "product_description": product_json["description"],
         "stores": stores
     }
 
