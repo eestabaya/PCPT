@@ -18,7 +18,7 @@ class RegistrationForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(
-        'Repeat Password', validators=[DataRequired(), EqualTo('password', message='Passwords do not match.')])
+        'Repeat Password', validators=[DataRequired(message='Required field.'), EqualTo('password', message='Passwords do not match.')])
     submit = SubmitField('Register')
 
     def validate_username(self, username):
@@ -48,7 +48,7 @@ class RegistrationForm(FlaskForm):
 class ChangePasswordForm(FlaskForm):
     old_password = PasswordField('Old Password', validators=[DataRequired()])
     new_password = PasswordField('New Password', validators=[DataRequired(), EqualTo('new_password2', message='Passwords do not match.')])
-    new_password2 = PasswordField('Repeat Password', validators=[DataRequired()])
+    new_password2 = PasswordField('Repeat Password', validators=[DataRequired(message='Required field.')])
     submit = SubmitField('Change Password')
 
 
