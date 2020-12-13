@@ -46,7 +46,7 @@
         <a id="submit" href="/mysystemconfig">Go to My System Config</a>
         <h2>Search History</h2>
         {% for term in data.past_searches %}
-            <a href="/search" style="text-decoration: none; color: #000000;">
+            <a href="/search?query={{ term }}" style="text-decoration: none; color: #000000;">
             <div id="term" style="margin-bottom: 20px;">
                 <p>{{ term }}</p>
             </div></a>
