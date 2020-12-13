@@ -122,7 +122,9 @@ def extract_bh_page(source):
             lambda tag: tag.name == 'span' and tag.get('data-selenium') == 'miniProductPageProductName').contents[0]
 
         product_picture = product_soup.find(
-            lambda tag: tag.name == 'img' and tag.get('data-selenium') == 'miniProductPageImg').get('src')
+            lambda tag: tag.name == 'img' and tag.get('data-selenium') == 'miniProductPageImg')
+        if product_picture is not None:
+            product_picture = product_picture.get('src')
 
         rating_section = product_soup.find(
             lambda tag: tag.name == 'div' and tag.get('data-selenium') == 'ratingContainer').contents
