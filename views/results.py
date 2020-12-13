@@ -41,7 +41,7 @@ def process_results():
         picture = item["picture"]
 
         if item["picture"] is None:
-            picture = "https://static.bhphoto.com/images/images2500x2500/1548869076_1456228.jpg" # TODO placeholder fix
+            picture = "https://slyce.it/wp-content/themes/unbound/images/No-Image-Found-400x264.png"  # TODO placeholder fix
 
         product = {
             "product_name": item["name"],
