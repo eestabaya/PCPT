@@ -33,12 +33,19 @@ def process_results():
             continue
 
     products_arr = []
+    brands = []
+
     for item in items:
         rating = 5
         price_low = 4
         price_high = 4
 
         picture = item["picture"]
+
+        brand = item["name"].split(" ")[0]
+
+        if brand not in brands:
+            brands.append(brand)
 
         if item["picture"] is None:
             picture = "https://slyce.it/wp-content/themes/unbound/images/No-Image-Found-400x264.png"  # TODO placeholder fix
@@ -141,7 +148,7 @@ def process_results():
     items_dict = {
         "query": query,
         "products_found": len(items),
-        "brandnames": ["Nvidia", "Intel"],
+        "brandnames": brands,
         "models" : ["Model1", "Model2"],
         "products": products_arr
     }
