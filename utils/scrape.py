@@ -4,8 +4,22 @@
 
 import bs4
 import time
+from random import choice
+import requests
 
 from selenium import webdriver
+
+desktop_agents = [
+    'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/602.2.14 (KHTML, like Gecko) Version/10.0.1 Safari/602.2.14',
+    'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
+    'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0']
 
 store_urls = {
     'adorama':
@@ -18,6 +32,17 @@ store_urls = {
         {'gpu': "https://www.newegg.com/p/pl?N=100007709%208000&PageSize=96&Order=1",
          'cpu': "https://www.newegg.com/p/pl?N=100007671%208000&PageSize=96&Order=1"}
 }
+
+
+def random_headers():
+    return {'User-Agent': choice(desktop_agents),
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'}
+
+
+def extract_source_requests(url):
+    source = requests.get(url, headers=random_headers()).text
+    time.sleep(10)
+    return source
 
 
 def get_webdriver():
@@ -164,13 +189,15 @@ def extract_newegg_page(source):
 def scrape_bh_category(category_url):
     """given a B&H category's url, scrapes all pages and returns a dictionary with format { part # : price } of all
     products in category"""
-    driver = get_webdriver()
-    num_products = extract_bh_num_results(extract_source(category_url, driver))
+    # driver = get_webdriver()
+    # num_products = extract_bh_num_results(extract_source(category_url, driver))
+    num_products = extract_bh_num_results(extract_source_requests(category_url))
     part_num_to_data = {}
     for i in range(1, (num_products - 1) // 30 + 2):
-        page_data = extract_bh_page(extract_source(category_url + "/pn/" + str(i), driver))
+        # page_data = extract_bh_page(extract_source(category_url + "/pn/" + str(i), driver))
+        page_data = extract_bh_page(extract_source_requests(category_url + "/pn/" + str(i)))
         part_num_to_data.update(page_data)
-    driver.close()
+    # driver.close()
     return part_num_to_data
 
 
@@ -190,13 +217,15 @@ def scrape_adorama_category(category_url):
 def scrape_newegg_category(category_url):
     """given a Newegg category's URL, scrapes all pages and returns a dictionary with format { part # : price } of
     all products in a category"""
-    driver = get_webdriver()
-    num_pages = extract_newegg_num_pages(extract_source(category_url, driver))
+    # driver = get_webdriver()
+    # num_pages = extract_newegg_num_pages(extract_source(category_url, driver))
+    num_pages = extract_newegg_num_pages(extract_source_requests(category_url))
     part_num_to_data = {}
     for i in range(1, num_pages):
-        page_data = extract_newegg_page(extract_source(category_url + "&page=" + str(i), driver))
+        # page_data = extract_newegg_page(extract_source(category_url + "&page=" + str(i), driver))
+        page_data = extract_newegg_page(extract_source_requests(category_url + "&page=" + str(i)))
         part_num_to_data.update(page_data)
-    driver.close()
+    # driver.close()
     return part_num_to_data
 
 
@@ -204,7 +233,7 @@ def get_gpu_prices():
     gpu_prices = {}
     # gpu_prices['adorama'] = scrape_adorama_category(store_urls['adorama']['gpu'])
     gpu_prices['bhphotovideo'] = scrape_bh_category(store_urls['bhphotovideo']['gpu'])
-    # gpu_prices['newegg'] = scrape_newegg_category(store_urls['newegg']['gpu'])
+    gpu_prices['newegg'] = scrape_newegg_category(store_urls['newegg']['gpu'])
     return gpu_prices
 
 
@@ -212,5 +241,5 @@ def get_cpu_prices():
     cpu_prices = {}
     # cpu_prices['adorama'] = scrape_adorama_category(store_urls['adorama']['cpu'])
     cpu_prices['bhphotovideo'] = scrape_bh_category(store_urls['bhphotovideo']['cpu'])
-    # cpu_prices['newegg'] = scrape_newegg_category(store_urls['newegg']['cpu'])
+    cpu_prices['newegg'] = scrape_newegg_category(store_urls['newegg']['cpu'])
     return cpu_prices
