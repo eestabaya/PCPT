@@ -41,7 +41,6 @@ def random_headers():
 
 def extract_source_requests(url):
     source = requests.get(url, headers=random_headers()).text
-    time.sleep(10)
     return source
 
 
@@ -103,15 +102,15 @@ def extract_bh_page(source):
     for product in products:
         product_soup = bs4.BeautifulSoup(str(product), 'lxml')
 
-        product_name = product_soup.find(
+        product_id = product_soup.find(
             lambda tag: tag.name == 'div' and tag.get('data-selenium') == 'miniProductPageProductSkuInfo').contents[
             0].split("#")
-        product_name = product_name[len(product_name) - 1]
+        product_id = product_id[len(product_id) - 1].strip()
 
         product_price_section = product_soup.find(
             lambda tag: tag.name == 'span' and tag.get('data-selenium') == 'uppedDecimalPrice')
         if product_price_section is None:
-            print("Price unavailable: " + product_name)
+            print("Price unavailable: " + product_id)
             continue
         product_price = product_price_section.contents[0].contents[0] + "." + \
                         product_price_section.contents[1].contents[0]
@@ -119,7 +118,22 @@ def extract_bh_page(source):
         product_link = 'www.bhphotovideo.com' + product_soup.find(
             lambda tag: tag.name == 'a' and tag.get('data-selenium') == 'miniProductPageProductNameLink').get('href')
 
-        part_num_to_data[product_name] = [product_price, product_link]
+        product_name = product_soup.find(
+            lambda tag: tag.name == 'span' and tag.get('data-selenium') == 'miniProductPageProductName').contents[0]
+
+        product_picture = product_soup.find(
+            lambda tag: tag.name == 'img' and tag.get('data-selenium') == 'miniProductPageImg')
+        if product_picture is not None:
+            product_picture = product_picture.get('src')
+
+        rating_section = product_soup.find(
+            lambda tag: tag.name == 'div' and tag.get('data-selenium') == 'ratingContainer')
+        product_rating = 0
+        if rating_section is not None:
+            for star in rating_section.contents:
+                if len(star.get('class')) == 3:
+                    product_rating += 1
+        part_num_to_data[product_id] = [product_price, product_name, product_link, product_picture, product_rating]
 
     return part_num_to_data
 
@@ -177,8 +191,10 @@ def extract_newegg_page(source):
                 pass
             rounded_part_price = f"${part_price:.2f}"
 
+            part_url = product_soup.find(class_='item-title').get('href')
+
             if part_num is not None and rounded_part_price is not None:
-                part_num_to_data[part_num] = rounded_part_price
+                part_num_to_data[part_num] = [rounded_part_price, part_url]
 
         except Exception as e:
             print(e)
@@ -233,7 +249,7 @@ def get_gpu_prices():
     gpu_prices = {}
     # gpu_prices['adorama'] = scrape_adorama_category(store_urls['adorama']['gpu'])
     gpu_prices['bhphotovideo'] = scrape_bh_category(store_urls['bhphotovideo']['gpu'])
-    gpu_prices['newegg'] = scrape_newegg_category(store_urls['newegg']['gpu'])
+    #gpu_prices['newegg'] = scrape_newegg_category(store_urls['newegg']['gpu'])
     return gpu_prices
 
 
@@ -241,5 +257,5 @@ def get_cpu_prices():
     cpu_prices = {}
     # cpu_prices['adorama'] = scrape_adorama_category(store_urls['adorama']['cpu'])
     cpu_prices['bhphotovideo'] = scrape_bh_category(store_urls['bhphotovideo']['cpu'])
-    cpu_prices['newegg'] = scrape_newegg_category(store_urls['newegg']['cpu'])
+    #cpu_prices['newegg'] = scrape_newegg_category(store_urls['newegg']['cpu'])
     return cpu_prices
