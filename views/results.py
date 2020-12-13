@@ -149,7 +149,6 @@ def process_results():
         "query": query,
         "products_found": len(items),
         "brandnames": brands,
-        "models" : ["Model1", "Model2"],
         "products": products_arr
     }
 
