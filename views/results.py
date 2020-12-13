@@ -86,7 +86,6 @@ def process_results():
                 "product_rating": 4,
                 "price_low": 100.00,
                 "price_high": 201.99,
-                "product_in_stock": True,
                 "product_id": 7,
                 "product_url": "http://34.220.161.8/product",
                 "imgurl" : "https://static.bhphoto.com/images/images2500x2500/1548869076_1456228.jpg"
