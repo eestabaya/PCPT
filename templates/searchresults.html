@@ -18,14 +18,6 @@
                 <p style="color: #FFADAD; font-size: 20px; margin-top:-5px;margin-left: 20px;">{{ brandname }}</p>
             </div>
             {% endfor %}
-            <h3>Model</h3>
-            {% for model in var.models %}
-                <div style="display: flex; flex-direction: row;width:200px;height:50px">
-                    <input type="checkbox" id="{{ model }}">
-                    <p style="color: #FFADAD; font-size: 20px; margin-top:-5px;margin-left: 20px;">{{ model }}</p>
-                </div>
-                
-            {% endfor %}
             <h3>Price Range</h3>
             <script>
                 $( function() {
