@@ -203,10 +203,23 @@ def extract_newegg_page(source):
                 pass
             rounded_part_price = f"${part_price:.2f}"
 
-            part_url = product_soup.find(class_='item-title').get('href')
+            item_title = product_soup.find(class_='item-title')\
+
+            part_url = item_title.get('href')
+
+            part_name = item_title.contents[len(item_title.contents) - 1]
+
+            part_picture = product_soup.find(class_='item-img').contents[0].get('src')
+
+            part_rating = int(product_soup.find(class_='item-rating').contents[0].get('class')[1].split('-')[1])
+
+            item_features = product_soup.find(class_='item-features')
+            part_specs = []
+            for li in item_features:
+                part_specs.append(li.text)
 
             if part_num is not None and rounded_part_price is not None:
-                part_num_to_data[part_num] = [rounded_part_price, part_url]
+                part_num_to_data[part_num] = [rounded_part_price, part_name, part_url, part_picture, part_rating, part_specs]
 
         except Exception as e:
             print(e)
@@ -261,7 +274,7 @@ def get_gpu_prices():
     gpu_prices = {}
     # gpu_prices['adorama'] = scrape_adorama_category(store_urls['adorama']['gpu'])
     gpu_prices['bhphotovideo'] = scrape_bh_category(store_urls['bhphotovideo']['gpu'])
-    # gpu_prices['newegg'] = scrape_newegg_category(store_urls['newegg']['gpu'])
+    gpu_prices['newegg'] = scrape_newegg_category(store_urls['newegg']['gpu'])
     return gpu_prices
 
 
@@ -269,5 +282,5 @@ def get_cpu_prices():
     cpu_prices = {}
     # cpu_prices['adorama'] = scrape_adorama_category(store_urls['adorama']['cpu'])
     cpu_prices['bhphotovideo'] = scrape_bh_category(store_urls['bhphotovideo']['cpu'])
-    # cpu_prices['newegg'] = scrape_newegg_category(store_urls['newegg']['cpu'])
+    cpu_prices['newegg'] = scrape_newegg_category(store_urls['newegg']['cpu'])
     return cpu_prices
