@@ -5,3 +5,4 @@ Website for UCSD CSE 110 Team "PC Price Tracker". Do note there are some issues 
 - Filter buttons have improper behavior.
 - Many products do not have images (due to the limitations of scraping).
 - "Field required" messages may disrupt the styling.
+- Styling may be improper on some pages.
