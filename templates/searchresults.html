@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block title %}Search{% endblock %}
 
+<script src="/static/js/renderResults.js"></script>
+
 {% block content %}
     <div class="container">
         <h1>Showing {{ query_size }} results for "{{ query }}"</h1>
@@ -47,8 +49,6 @@
         {% endif %}
 
     </div>
-
-    <script src="/static/js/renderResults.js"></script>
 
     <style>
         h1 {
