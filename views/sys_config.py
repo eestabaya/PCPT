@@ -68,3 +68,35 @@ def add_part_to_config():
         update_user(user.name, pc_part=product_json["_id"])
 
     return redirect('/mysystemconfig')
+
+
+@mod.route('/deletefromconfig')
+def delete_part_in_config():
+
+    # Check if user is authenticated
+    user = current_user
+    if not user.is_authenticated:
+        return redirect('/')
+
+    # Check if PC part exists
+    item_id = request.args.get('item_id')
+
+    if item_id is None:
+        return redirect('/')
+
+    product_json = get_product_from_mongo(item_id)
+
+    if product_json is None:
+        return redirect('/')
+
+    # Check if user does not have this specific part
+    mongo_user = find_user(user.name)
+    config_arr = mongo_user["configuration"]
+
+    if item_id not in config_arr:
+        flash("You don't have this part!")
+    else:
+        flash("Removed part from config!")
+        update_user(user.name, pc_part=product_json["_id"], remove=True)
+
+    return redirect('/mysystemconfig')
