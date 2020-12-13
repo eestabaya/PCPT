@@ -15,9 +15,11 @@
             <div class="gallery">
                 {% for part in configs.parts %}
                     <div class="item" style="position:relative">
-                        <a href="/product?item_id={{ configs.parts[part].part_id }}"><img style="display:block" src="{{ configs.parts[part].imgurl }}"></a>
-                        <a href="/deletefromconfig?item_id={{ configs.parts[part].part_id }}" class="fas fa-trash-alt" style="color:#420000; display: block; top:-100px"></a>
-                        <h3>{{ part }}</h3>    
+                        <a href="/product?item_id={{ configs.parts[part].part_id }}"><img style="display:block"
+                                                                                          src="{{ configs.parts[part].imgurl }}"></a>
+                        <a href="/deletefromconfig?item_id={{ configs.parts[part].part_id }}" class="fas fa-trash-alt"
+                           style="color:#420000; display: block; top:-100px"></a>
+                        <h3>{{ part }}</h3>
                     </div>
                 {% endfor %}
             </div>

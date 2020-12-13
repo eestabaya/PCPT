@@ -10,60 +10,61 @@
 </head>
 
 <body>
-    <input type="checkbox" id="chk">
+<input type="checkbox" id="chk">
 
-    <label for="chk" class="show-menu menuBtn type1">
-        <span></span>
-    </label>
+<label for="chk" class="show-menu menuBtn type1">
+    <span></span>
+</label>
 
-    <div class="menu">
+<div class="menu">
 
-        <a href="/">Home</a>
-        <!-- <a href="#">About</a>
-        <a href="#">Browse</a> -->
+    <a href="/">Home</a>
+    <!-- <a href="#">About</a>
+    <a href="#">Browse</a> -->
 
-        {% if user %}
-            <a href="/profile">Profile</a>
-            <a href="/mysystemconfig">My Config</a>
-            <a href="/logout">Logout</a>
-        {% else %}
-            <a href="/login">Login</a>
-        {% endif %}
+    {% if user %}
+        <a href="/profile">Profile</a>
+        <a href="/mysystemconfig">My Config</a>
+        <a href="/logout">Logout</a>
+    {% else %}
+        <a href="/login">Login</a>
+    {% endif %}
 
-    </div>
+</div>
 
-    <div class="wrapper" style="transition: 0.7s;overflow-y:scroll">
+<div class="wrapper" style="transition: 0.7s;overflow-y:scroll">
 
-        <div class="searchBar">
+    <div class="searchBar">
 
-            <form action="/search">
-                <input type="submit" style="display: none" />
-                <i class="fa fa-search fa-2x" style="color:#ffeded;margin-left:20px;width:auto;margin-top:10px;"></i>
+        <form action="/search">
+            <input type="submit" style="display: none"/>
+            <i class="fa fa-search fa-2x" style="color:#ffeded;margin-left:20px;width:auto;margin-top:10px;"></i>
 
-                <input id="field" type="text" name="query" placeholder="Search products here" value="{{ request.form.search }}">
-                <!-- <input type="submit" value="subimt"> -->
-            </form>
-
-        </div>
-
-        {% block content %}
-        {% endblock %}
+            <input id="field" type="text" name="query" placeholder="Search products here"
+                   value="{{ request.form.search }}">
+            <!-- <input type="submit" value="subimt"> -->
+        </form>
 
     </div>
 
-    <script src="/static/js/menuButton.js"></script>
+    {% block content %}
+    {% endblock %}
 
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-                <script type="text/javascript" src="/static/js/alertbox.js"></script>
-                <script type="text/javascript">
-                    let msg = "{{ message | safe }}";
-                    showAlert(msg);
-                </script>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+</div>
+
+<script src="/static/js/menuButton.js"></script>
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <script type="text/javascript" src="/static/js/alertbox.js"></script>
+            <script type="text/javascript">
+                let msg = "{{ message | safe }}";
+                showAlert(msg);
+            </script>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 
 </body>
 </html>

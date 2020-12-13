@@ -5,19 +5,19 @@
 {% block content %}
     <div class="login-module">
         <form action="" method="post" novalidate>
-            {{ form.hidden_tag() }}        
+            {{ form.hidden_tag() }}
             <h1>Account Login</h1>
             <p>
                 {{ form.username.label }}
                 {% for error in form.username.errors %}
-                <span style="color: red;">[{{ error }}]</span>
+                    <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
                 {{ form.username(size=32) }}
             </p>
             <p>
                 {{ form.password.label }}
                 {% for error in form.password.errors %}
-                <span style="color: red;">[{{ error }}]</span>
+                    <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
                 {{ form.password(size=32) }}
             </p>
