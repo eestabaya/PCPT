@@ -14,15 +14,15 @@
             <h3>Brands</h3>
             {% for brandname in var.brandnames %}
             <div style="display: flex; flex-direction: row;width:200px;height:50px">
-                <input type="checkbox" id="{{brandname}}">
-                <p style="color: #FFADAD; font-size: 20px; margin-top:-5px;margin-left: 20px;">{{brandname}}</p>
+                <input type="checkbox" id="{{ brandname }}">
+                <p style="color: #FFADAD; font-size: 20px; margin-top:-5px;margin-left: 20px;">{{ brandname }}</p>
             </div>
             {% endfor %}
             <h3>Model</h3>
             {% for model in var.models %}
                 <div style="display: flex; flex-direction: row;width:200px;height:50px">
-                    <input type="checkbox" id="{{model}}">
-                    <p style="color: #FFADAD; font-size: 20px; margin-top:-5px;margin-left: 20px;">{{model}}</p>
+                    <input type="checkbox" id="{{ model }}">
+                    <p style="color: #FFADAD; font-size: 20px; margin-top:-5px;margin-left: 20px;">{{ model }}</p>
                 </div>
                 
             {% endfor %}
@@ -75,19 +75,23 @@
                         </a>
                     </div>
                     <script>
-                        var rating = {{product.product_rating}};
+                        let rating = {{product.product_rating}};
                         switch (rating) {
                             case 5:
                                 $('.item{{product.product_id}} #star5').toggleClass('blue');
+                                break;
                             case 4:
                                 $('.item{{product.product_id}} #star4').toggleClass('blue');
+                                break;
                             case 3:
                                 $('.item{{product.product_id}} #star3').toggleClass('blue');
+                                break;
                             case 2:
                                 $('.item{{product.product_id}} #star2').toggleClass('blue');
+                                break;
                             case 1:
                                 $('.item{{product.product_id}} #star1').toggleClass('blue');
-                            case 0:
+                                break;
                         }
                         {% for brandname in var.brandnames %}
                             $('input #{{brandname}}').click({
