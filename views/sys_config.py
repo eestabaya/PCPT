@@ -57,7 +57,14 @@ def add_part_to_config():
     if product_json is None:
         return redirect('/')
 
-    update_user(user.name, pc_part=product_json["_id"])
+    # Check if user already added this specific part
+    mongo_user = find_user(user.name)
+    config_arr = mongo_user["configuration"]
 
-    flash("Added part to config!")
+    if item_id in config_arr:
+        flash("You already have this part!")
+    else:
+        flash("Added part to config!")
+        update_user(user.name, pc_part=product_json["_id"])
+
     return redirect('/mysystemconfig')
