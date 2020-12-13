@@ -28,11 +28,11 @@
                             <img src="{{ product.imgurl }}">
                             <h3>{{ product.product_name }}</h3>
                             <div class="rating item{{ product.product_id }}">
-                                <i class="fas fa-star" id="star1"></i>
-                                <i class="fas fa-star" id="star2"></i>
-                                <i class="fas fa-star" id="star3"></i>
-                                <i class="fas fa-star" id="star4"></i>
-                                <i class="fas fa-star" id="star5"></i>
+                                <i class="fas fa-star" id="{{ product.product_name }}star1"></i>
+                                <i class="fas fa-star" id="{{ product.product_name }}star2"></i>
+                                <i class="fas fa-star" id="{{ product.product_name }}star3"></i>
+                                <i class="fas fa-star" id="{{ product.product_name }}star4"></i>
+                                <i class="fas fa-star" id="{{ product.product_name }}star5"></i>
                             </div>
                             <h3>{{ product.price_low }} - {{ product.price_high }}</h3>
                         </a>
@@ -41,15 +41,15 @@
                         stars = "{{ product.product_rating }}";
                         switch (stars) {
                             case "5.0":
-                                $('.{{ product.product_name }} #star5').toggleClass('blue');
+                                $('#{{ product.product_name }}star5').toggleClass('blue');
                             case "4.0":
-                                $('.{{ product.product_name }} #star4').toggleClass('blue');
+                                $('#{{ product.product_name }}star4').toggleClass('blue');
                             case "3.0":
-                                $('.{{ product.product_name }} #star3').toggleClass('blue');
+                                $('#{{ product.product_name }}star3').toggleClass('blue');
                             case "2.0":
-                                $('.{{ product.product_name }} #star2').toggleClass('blue');
+                                $('#{{ product.product_name }}star2').toggleClass('blue');
                             case "1.0":
-                                $('.{{ product.product_name }} #star1').toggleClass('blue');
+                                $('#{{ product.product_name }}star1').toggleClass('blue');
                         }
                     </script>
                 {% endfor %}
