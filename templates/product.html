@@ -17,11 +17,25 @@
                     <div class="product-img">            
                         <img src="{{ product.product_imgurl }}">
                     </div>
+                    <a href="#" id="btn"> Add to My Config</a>
             
                 </div>
                 <div class="column2">
                     <h2>Product Details</h2>
                     <p class="detailsTxt">
+                            Model Number: RX-580P826D6<br>
+                            Base Clock: 1366MHz<br>
+                            Boost Clock: 1386MHz<br>
+                            Stream Processors: 2304<br>
+                            Memory Bus: 256 bit<br>
+                            Memory Base Clock: 8.0GHz<br>
+                            Memory Boost Clock: 8.1GHz<br>
+                            Memory Size: 8GB<br>
+                            Memory Type: DDR5<br>
+                            Slots: 2<br>
+                            Minimum PSU: 500W<br>
+                            Power Cable: 1x 8 Pin<br>
+                            Outputs: 3x Displayport, 1x HDMI, 1x DVI-D<br><br>
                         {{ product.product_description }}
                     </p>
                     <h2>Product Prices</h2>
@@ -29,9 +43,9 @@
                         {% for site in product.stores %}
                         <tr>
                           <td>
-                          <img id="iconimg" src="{{ product.stores[site].store_iconurl }}"> <!-- TODO -->
+                          <img id="iconimg" src="{{ site.store_iconurl }}"> <!-- TODO -->
                           <th>{{site}}</th>
-                          <td><a href="{{ product.stores[site].store_url }}">Store Page</a></td>
+                          <td><a href="{{ site.store_url }}">Store Page</a></td>
                           {% if product.stores[site].product_in_stock %}
                             <td>In Stock</td>
                           {% else %}
@@ -97,13 +111,33 @@
             color: #000000;
         }
 
+        #btn{
+            
+            margin-top: 40px;
+                    background: #FFADAD;
+                    border-radius: 50px;         
+                    width: 240px;
+                    height: 60px;
+                    font-family: DM Mono;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 20px;
+                    line-height: 36px;
+                    display: flex;
+                    align-items: center;
+                    text-align: center;
+                    justify-content: center;
+                    text-decoration: none;
+                    color: #FFFFFF;
+        }
+
         p{
             font-size: 18px;
         }
 
         .detailsTxt{
             overflow-y: scroll;
-            height:100px;
+            height:400px;
         }
 
         #iconimg{

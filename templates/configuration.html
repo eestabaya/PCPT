@@ -20,22 +20,20 @@
             {% endif %}
         {% endwith %}
 
-        {% for config in configs %}
         <div class="gallery-container">
-            <h2>{{config}}</h2>
+            <h2>My PC Build</h2>
             <div class="gallery">
-                {% for part in configs[config].parts %}
-                    <div class="item">
-                        <img src="{{ configs[config].parts[part].imgurl }}">
+                {% for part in configs.parts %}
+                    <div class="item" style="position:relative">
+                        <img style="display:block" src="{{ configs.parts[part].imgurl }}"></img>
+                        <a href="#" class="fas fa-trash-alt" style="color:#420000; display: block; top:-100px"></a>
                         <h3>{{ part }}</h3>    
                     </div>
                 {% endfor %}
             </div>
-        <a class="button">Edit Config</a>
         </div>
         <br>
         <br>
-        {% endfor %}
     </div>
 
     <style>
