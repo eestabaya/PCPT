@@ -18,20 +18,26 @@ def get_product_from_mongo(model_num):
     return db["product"].find_one({"_id": model_num})
 
 
-def update_user(_id, salt=None, pw_hash=None, search=None, pc_part=None):
+def update_user(_id, salt=None, pw_hash=None, search=None, pc_part=None, remove=False):
     user_col = db["users"]
 
     query = {"_id": _id}
 
     if pc_part is not None:
-        update = {
-            "$push": {
-                "configuration": {
-                    "$each": [pc_part]
+        if remove:
+            update = {
+                "$pull": {
+                    "configuration": pc_part
                 }
             }
-        }
-        user_col.update_one(query, update)
+            user_col.update_one(query, update)
+        else:
+            update = {
+                "$push": {
+                    "configuration": pc_part
+                }
+            }
+            user_col.update_one(query, update)
 
     if salt is not None and pw_hash is not None:
         update = {
