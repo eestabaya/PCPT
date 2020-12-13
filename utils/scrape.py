@@ -127,11 +127,12 @@ def extract_bh_page(source):
             product_picture = product_picture.get('src')
 
         rating_section = product_soup.find(
-            lambda tag: tag.name == 'div' and tag.get('data-selenium') == 'ratingContainer').contents
-        product_rating = 0
-        for star in rating_section:
-            if len(star.get('class')) == 3:
-                product_rating += 1
+            lambda tag: tag.name == 'div' and tag.get('data-selenium') == 'ratingContainer')
+        if rating_section is not None:
+            product_rating = 0
+            for star in rating_section.contents:
+                if len(star.get('class')) == 3:
+                    product_rating += 1
         part_num_to_data[product_id] = [product_price, product_name, product_link, product_picture, product_rating]
 
     return part_num_to_data
