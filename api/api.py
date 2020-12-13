@@ -14,6 +14,10 @@ def get_from_mongo(col="test"):
         return {"success": "false", "cause": str(e)}
 
 
+def get_product_from_mongo(model_num):
+    return db["product"].find_one({"_id": model_num})
+
+
 def update_user(_id, salt=None, pw_hash=None, search=None):
     user_col = db["users"]
 
