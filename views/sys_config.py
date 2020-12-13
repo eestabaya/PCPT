@@ -20,8 +20,13 @@ def view_config_page():
     parts = {}
     for part in user_config:
         product = get_product_from_mongo(part)
+
+        img_url = product["picture"]
+        if img_url is None:
+            img_url = "https://slyce.it/wp-content/themes/unbound/images/No-Image-Found-400x264.png"
+
         part_json = {
-            "imgurl": product["picture"]
+            "imgurl": img_url
         }
         parts[product["name"]] = part_json
 
