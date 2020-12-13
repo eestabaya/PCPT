@@ -13,22 +13,20 @@
             <div style="background-color: #FFADAD;width:200px;height:10px;"></div>
             <h3>Brands</h3>
             {% for brandname in var.brandnames %}
-            <div style="display: flex; flex-direction: row;width:200px;height:50px">
-                <input type="checkbox" id="{{ brandname }}">
-                <p style="color: #FFADAD; font-size: 20px; margin-top:-5px;margin-left: 20px;">{{ brandname }}</p>
-            </div>
+                <div style="display: flex; flex-direction: row;width:200px;height:50px">
+                    <input type="checkbox" id="{{ brandname }}">
+                    <p style="color: #FFADAD; font-size: 20px; margin-top:-5px;margin-left: 20px;">{{ brandname }}</p>
+                </div>
             {% endfor %}
-
-              <div id="slider-range" style="background-color: #FFADAD; font-size: 20px; margin-top:-5px;margin-left: 20px; width:180px"></div>
         </div>
 
         {% if var %}
 
             <div class="products">
                 {% for product in var.products %}
-                    <div class="product" id="{{product.model}} {{product.brandname}}">
+                    <div class="product" id="{{ product.model }} {{ product.brandname }}">
                         <a href="{{ product.product_url }}" style="text-decoration: none;color:#000">
-                            <img src="{{product.imgurl}}">
+                            <img src="{{ product.imgurl }}">
                             <h3>{{ product.product_name }}</h3>
                             <div class="rating item{{ product.product_id }}">
                                 <i class="fas fa-star" id="star1"></i>
