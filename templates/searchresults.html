@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Search{% endblock %}
 
-<script src="/static/js/renderResults.js"></script>
-
 {% block content %}
     <div class="container">
         <h1>Showing {{ query_size }} results for "{{ query }}"</h1>
@@ -39,10 +37,11 @@
                             <h3>{{ product.price_low }} - {{ product.price_high }}</h3>
                         </a>
                     </div>
+                    <script type="text/javascript" src="/static/js/renderResults.js"></script>
                     <script type="text/javascript">
-                        stars = "{{ product.product_rating }}";
-                        prod = "{{ product.product_id }}";
-                        starSort(stars, prod)
+                        let stars = "{{ product.product_rating }}";
+                        let prod = "{{ product.product_id }}";
+                        starSort(stars, prod);
                     </script>
                 {% endfor %}
             </div>
