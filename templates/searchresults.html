@@ -14,7 +14,7 @@
             <h3>Brands</h3>
             {% for brandname in var.brandnames %}
                 <div style="display: flex; flex-direction: row;width:200px;height:50px">
-                    <input type="checkbox" id="{{ brandname }}">
+                    <input type="checkbox" name="{{ brandname }}">
                     <p style="color: #FFADAD; font-size: 20px; margin-top:-5px;margin-left: 20px;">{{ brandname }}</p>
                 </div>
             {% endfor %}

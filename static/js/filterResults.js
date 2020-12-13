@@ -1,7 +1,17 @@
-
-
 $(document).ready(function () {
-    $('.product').show();
+    $("input:checkbox").on("change", function () {
+        let a = $("input:checkbox:checked").val();
+        if ($(this).prop("checked")) {
+            $(".product:not(:contains(" + a + "))").hide();
+        } else {
+            $(".product").show();
+        }
+    });
+});
+
+/*
+$(document).ready(function () {
+    $('.products').show();
 
     $('.filter').find('input:checkbox').on('click', function() {
        let $prod = $('.product').hide();
@@ -11,8 +21,8 @@ $(document).ready(function () {
            .filter(function() {
                let $pr = $(this);
                return $elem.toArray().every(function(element) {
-                   return $pr.hasClass($(element).attr('id'));
+                   return $pr.hasClass($(element).attr('value'));
                });
            }).show();
     });
-});
+});*/
