@@ -11,7 +11,7 @@ $(document).ready(function () {
            .filter(function() {
                let $pr = $(this);
                return $elem.toArray().every(function(element) {
-                   return $pr.hasClass($(element).attr('value'));
+                   return $pr.hasClass($(element).attr('id'));
                });
            }).show();
     });
