@@ -26,7 +26,8 @@ def view_config_page():
             img_url = "https://slyce.it/wp-content/themes/unbound/images/No-Image-Found-400x264.png"
 
         part_json = {
-            "imgurl": img_url
+            "imgurl": img_url,
+            "part_id": part
         }
         parts[product["name"]] = part_json
 
