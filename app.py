@@ -15,7 +15,7 @@ from views import (
     profile
 )
 
-from views import registration, login, forgot_password
+from views import registration, login
 
 app = Flask(__name__)
 login_manager = LoginManager(app)
@@ -31,7 +31,6 @@ registers = [
     registration.mod,
     product.mod,
     login.mod,
-    forgot_password.mod,
     profile.mod
 ]
 
