@@ -18,10 +18,20 @@ def get_product_from_mongo(model_num):
     return db["product"].find_one({"_id": model_num})
 
 
-def update_user(_id, salt=None, pw_hash=None, search=None):
+def update_user(_id, salt=None, pw_hash=None, search=None, pc_part=None):
     user_col = db["users"]
 
     query = {"_id": _id}
+
+    if pc_part is not None:
+        update = {
+            "$push": {
+                "configuration": {
+                    "$each": [pc_part]
+                }
+            }
+        }
+        user_col.update_one(query, update)
 
     if salt is not None and pw_hash is not None:
         update = {
@@ -59,7 +69,7 @@ def create_user(u):
         "email": u.email,
         "password": {"salt": u.salt, "hashed": u.pw_hash},
         "search_history": [],
-        "configurations": {}
+        "configuration": []
     }
     db["users"].insert_one(data)
 
