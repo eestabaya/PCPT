@@ -31,7 +31,7 @@
                           <td>
                           <img id="iconimg" src="{{ product.stores[site].store_iconurl }}"> <!-- TODO -->
                           <th>{{ site }}</th>
-                          <td><a href="http://{{ product.stores[site].store_url }}">Store Page</a></td>
+                          <td><a href="http://{{ product.stores[site].store_url }}" target="_blank">Store Page</a></td>
                           {% if product.stores[site].product_in_stock %}
                             <td>In Stock</td>
                           {% else %}
