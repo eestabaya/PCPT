@@ -45,4 +45,4 @@ def view_product_page():
         "stores": stores
     }
 
-    return render_template("product.html", product=product, user=user)
+    return render_template("product.html", product=product, user=user, item_id=item_id)

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect
+from flask import Blueprint, render_template, redirect, flash
 from flask_login import current_user
 from api.api import find_user
 
@@ -45,3 +45,19 @@ def view_config_page():
     user_configs = mongo_user["configurations"]
 
     return render_template("configuration.html", user=user, configs=user_configs)
+
+
+@mod.route('/addtoconfig')
+def add_part_to_config():
+
+    # Check if user is authenticated
+    user = current_user
+    if not user.is_authenticated:
+        return redirect('/login')
+
+    mongo_user = find_user(user.name)
+
+    # do database shit
+
+    flash("Added part to config!")
+    return redirect('/mysystemconfig')
