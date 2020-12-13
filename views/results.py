@@ -36,25 +36,22 @@ def process_results():
     brands = []
 
     for item in items:
-        rating = 5
-        price_low = 4
-        price_high = 4
 
+        info_tuple = compute_ranges(item["stores"])
         picture = item["picture"]
-
         brand = item["name"].split(" ")[0]
 
         if brand not in brands:
             brands.append(brand)
 
         if item["picture"] is None:
-            picture = "https://slyce.it/wp-content/themes/unbound/images/No-Image-Found-400x264.png"  # TODO placeholder fix
+            picture = "https://slyce.it/wp-content/themes/unbound/images/No-Image-Found-400x264.png"
 
         product = {
             "product_name": item["name"],
-            "product_rating": rating,
-            "price_low": price_low,
-            "price_high": price_high,
+            "price_low": info_tuple[0],
+            "price_high": info_tuple[1],
+            "product_rating": info_tuple[2],
             "product_id": item["_id"],
             "product_url": "http://35.166.98.59/product?item_id=" + item["_id"],
             "imgurl": picture
@@ -62,89 +59,6 @@ def process_results():
 
         products_arr.append(product)
 
-
-    """
-    items_dict = {
-        "query": query,
-        "products_found": len(items),
-        "brandnames": ["Nvidia", "Intel"],
-        "models" : ["Model1", "Model2"],
-        "products": [
-            {
-                "product_name": "XFX Radeon RX 580 GTS XXX Edition 1386MHz OC+, 8GB GDDR5, VR Ready, Dual BIOS, 3xDP HDMI DVI, AMD Graphics Card (RX-580P8DFD6)",
-                "product_rating": 3,
-                "price_low": 100.00,
-                "price_high": 201.99,
-                "product_in_stock": True,
-                "product_id": 1,
-                "product_url": "http://34.220.161.8/product",
-                "model": "Nvidia",
-                "imgurl" : "https://static.bhphoto.com/images/images2500x2500/1548869076_1456228.jpg"
-            },
-            {
-                "product_name": "XFX Radeon RX 580 GTS XXX Edition 1386MHz OC+, 8GB GDDR5, VR Ready, Dual BIOS, 3xDP HDMI DVI, AMD Graphics Card (RX-580P8DFD6)",
-                "product_rating": 4,
-                "price_low": 100.00,
-                "price_high": 201.99,
-                "product_in_stock": True,
-                "product_id": 2,
-                "product_url": "http://34.220.161.8/product",
-                "imgurl" : "https://static.bhphoto.com/images/images2500x2500/1548869076_1456228.jpg"
-            },
-            {
-                "product_name": "XFX Radeon RX 580 GTS XXX Edition 1386MHz OC+, 8GB GDDR5, VR Ready, Dual BIOS, 3xDP HDMI DVI, AMD Graphics Card (RX-580P8DFD6)",
-                "product_rating": 2,
-                "price_low": 100.00,
-                "price_high": 201.99,
-                "product_in_stock": True,
-                "product_id": 4,
-                "product_url": "http://34.220.161.8/product",
-                "imgurl" : "https://static.bhphoto.com/images/images2500x2500/1548869076_1456228.jpg"
-            },
-            {
-                "product_name": "XFX Radeon RX 580 GTS XXX Edition 1386MHz OC+, 8GB GDDR5, VR Ready, Dual BIOS, 3xDP HDMI DVI, AMD Graphics Card (RX-580P8DFD6)",
-                "product_rating": 1,
-                "price_low": 100.00,
-                "price_high": 201.99,
-                "product_in_stock": True,
-                "product_id": 3,
-                "product_url": "http://34.220.161.8/product",
-                "imgurl" : "https://static.bhphoto.com/images/images2500x2500/1548869076_1456228.jpg"
-            },
-            {
-                "product_name": "XFX Radeon RX 580 GTS XXX Edition 1386MHz OC+, 8GB GDDR5, VR Ready, Dual BIOS, 3xDP HDMI DVI, AMD Graphics Card (RX-580P8DFD6)",
-                "product_rating": 5,
-                "price_low": 100.00,
-                "price_high": 201.99,
-                "product_in_stock": True,
-                "product_id": 5,
-                "product_url": "http://34.220.161.8/product",
-                "imgurl" : "https://static.bhphoto.com/images/images2500x2500/1548869076_1456228.jpg"
-            },
-            {
-                "product_name": "XFX Radeon RX 580 GTS XXX Edition 1386MHz OC+, 8GB GDDR5, VR Ready, Dual BIOS, 3xDP HDMI DVI, AMD Graphics Card (RX-580P8DFD6)",
-                "product_rating": 3,
-                "price_low": 100.00,
-                "price_high": 201.99,
-                "product_in_stock": True,
-                "product_id": 6,
-                "product_url": "http://34.220.161.8/product",
-                "imgurl" : "https://static.bhphoto.com/images/images2500x2500/1548869076_1456228.jpg"
-            },
-            {
-                "product_name": "XFX Radeon RX 580 GTS XXX Edition 1386MHz OC+, 8GB GDDR5, VR Ready, Dual BIOS, 3xDP HDMI DVI, AMD Graphics Card (RX-580P8DFD6)",
-                "product_rating": 4,
-                "price_low": 100.00,
-                "price_high": 201.99,
-                "product_id": 7,
-                "product_url": "http://34.220.161.8/product",
-                "imgurl" : "https://static.bhphoto.com/images/images2500x2500/1548869076_1456228.jpg"
-            }
-        ]
-    }
-    """
-
-    # TODO adjust
     items_dict = {
         "query": query,
         "products_found": len(items),
@@ -153,3 +67,25 @@ def process_results():
     }
 
     return render_template("searchresults.html", user=user, var=items_dict, query=query, query_size=len(items))
+
+
+def compute_ranges(sites_dict):
+    low = -1
+    high = -1
+
+    rating_sum = 0
+    site_count = 0
+
+    for site in sites_dict:
+        site_count = site_count + 1
+        rating_sum = rating_sum + sites_dict[site]["rating"]
+
+        price = sites_dict[site]["price"]
+
+        if low == -1 or low > price:
+            low = price
+
+        if high == -1 or price > high:
+            high = price
+
+    return low, high, (rating_sum / site_count)
