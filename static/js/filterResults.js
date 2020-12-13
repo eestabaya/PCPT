@@ -1,6 +1,10 @@
-// call requets.js for database
-// now we have our data from database
-
-// jquery to find our query "var" in the database
-// display results
-
+$(document).ready(function () {
+    $("input:checkbox").on("change", function () {
+        let a = $("input:checkbox:checked").val();
+        if ($(this).prop("checked")) {
+            $(".product:not(:contains(" + a + "))").hide();
+        } else {
+            $(".product").show();
+        }
+    });
+});
