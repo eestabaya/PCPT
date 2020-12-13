@@ -5,41 +5,41 @@
 {% block content %}
     <div style="display: flex; flex-direction: row;width:1600px;height:800px;margin:auto;justify-content: space-around;">
     <div class="profile-module">
-        <h1>{{user.name}}</h1>
-        <h2>{{user.email}}</h2>
+        <h1>{{ user.name }}</h1>
+        <h2>{{ user.email }}</h2>
 
-            <div class="change-password-module">
+        <div class="change-password-module">
             <form action="" method="post" novalidate>
                 {{ form.hidden_tag() }}
-                    <div class="editpassform">
-                        <h3>Change Password</h3>
-                        <p>
-                            {{ form.old_password.label }}
-                            {% for error in form.old_password.errors %}
-                                <span style="color: red;">[{{ error }}]</span>
-                            {% endfor %}<br>
-                            {{ form.old_password(size=32) }}<br>
-                        </p>
-                        <p>
-                            {{ form.new_password.label }}
-                            {% for error in form.new_password.errors %}
-                                <span style="color: red;">[{{ error }}]</span>
-                            {% endfor %}<br>
-                            {{ form.new_password(size=32) }}<br>
-                        </p>
-                        <p>
-                            {{ form.new_password2.label }}
-                            {% for error in form.new_password2.errors %}
-                                <span style="color: red;">[{{ error }}]</span>
-                            {% endfor %}<br>
-                            {{ form.new_password2(size=32) }}<br>
-                        </p>
-                        <p>
-                            {{ form.submit() }}
-                        </p>
-                    </div>
-                </form>
-            </div>       
+                <div class="editpassform">
+                    <h3>Change Password</h3>
+                    <p>
+                        {{ form.old_password.label }}
+                        {% for error in form.old_password.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}<br>
+                        {{ form.old_password(size=32) }}<br>
+                    </p>
+                    <p>
+                        {{ form.new_password.label }}
+                        {% for error in form.new_password.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}<br>
+                        {{ form.new_password(size=32) }}<br>
+                    </p>
+                    <p>
+                        {{ form.new_password2.label }}
+                        {% for error in form.new_password2.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}<br>
+                        {{ form.new_password2(size=32) }}<br>
+                    </p>
+                    <p>
+                        {{ form.submit() }}
+                    </p>
+                </div>
+            </form>
+        </div>
     </div>
 
     <div class="searchHist">
@@ -47,109 +47,12 @@
         <h2>Search History</h2>
         {% for term in data.past_searches %}
             <a href="/search?query={{ term }}" style="text-decoration: none; color: #000000;">
-            <div id="term" style="margin-bottom: 20px;">
-                <p>{{ term }}</p>
-            </div></a>
+                <div id="term" style="margin-bottom: 20px;">
+                    <p>{{ term }}</p>
+                </div>
+            </a>
         {% endfor %}
     </div>
 
-    <style>
-
-    .profile-module, .searchHist{
-        background-color: #ffadad;
-        height: 600px;
-        width: 450px;
-        border-radius: 50px;
-        margin-top: 100px;
-        font-family: DM Mono;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 42px;
-        text-align: left;
-        padding:25px;
-        padding-left:50px;
-        justify-content: center;
-        color: #000000;
-    }
-
-    p{
-        height: 100px;
-        width:80%;
-        text-align: left;
-        margin: auto;
-    }
-
-    .change-password-module{
-        height: 300px;
-        width: 430px;
-        border-radius: 50px;
-        margin:auto;
-        margin-top: 100px;
-        font-family: DM Mono;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 42px;
-        text-align: left;
-        padding:25px;
-        padding-left:50px;
-        justify-content: center;
-        color: #000000;
-    }
-
-    .editpassform{
-        margin-top: -120px;
-        margin-left:-50px
-    }
-
-    .editpassform p{
-        margin-left:0px
-    }
-
-    #new_password2,#new_password,#old_password{
-        height:40px;
-        border-radius: 10px;
-        width:430px;
-        border:none;
-        background: #ffeded;
-    }
-
-    #term{
-        height:40px;
-        border-radius: 10px;
-        width:430px;
-        border:none;
-        background: #ffeded;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    #submit{  
-        position:relative;
-        width: 430px;
-        height:50px;
-        left: 0px;
-        top:20px;
-        border:none;
-        font-family: DM Mono;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 18px;
-        line-height: 42px;
-        text-align: center;
-        justify-content: center;
-        color: #000000;
-
-        /* Accent */
-
-        background: #FFEDED;
-        border-radius: 10px;
-    }
-
-    #term p{
-        margin-left: 20px;
-    }
-
-    </style>
+    <link rel="stylesheet" href="/static/css/profilelayout.css">
 {% endblock %}
