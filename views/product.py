@@ -38,7 +38,7 @@ def view_product_page():
             "store_url": store_json["link"],
             "product_price": store_json["price"],
             #"store_iconurl": "https://c1.neweggimages.com/WebResource/Themes/logo_newegg_400400.png"
-            "store_iconurl": https://i.imgur.com/0l5GKQe.png
+            "store_iconurl": "https://i.imgur.com/0l5GKQe.png"
         }
 
         stores[site] = store_dict
