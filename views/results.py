@@ -53,7 +53,7 @@ def process_results():
             "price_high": info_tuple[1],
             "product_rating": info_tuple[2],
             "product_id": item["_id"],
-            "product_url": "http://35.166.98.59/product?item_id=" + item["_id"],
+            "product_url": "http://localhost/product?item_id=" + item["_id"],
             "imgurl": picture
         }
 
