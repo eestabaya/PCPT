@@ -1,5 +1,5 @@
 # PCPT
-Website for UCSD CSE 110 Team "PC Price Tracker". Do note there are some issues found but have not been specified in the Google Form README as they were found extremely late.
+Website for UCSD CSE 110 Team "PC Price Tracker" for Fall Quarter 2020. This project is considered archived as it has already served its purpose as a project for the Fall 2020 quarter.
 
 ## Known Issues
 - Filter buttons have improper behavior.
