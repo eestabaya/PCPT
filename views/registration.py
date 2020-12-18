@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect
 from flask_login import current_user, login_user
-from views.forms import RegistrationForm
+from utils.forms import RegistrationForm
 from utils.models import User
 
 from api.api import create_user

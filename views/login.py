@@ -3,7 +3,7 @@ from flask_login import current_user, login_user, logout_user
 from utils.models import User
 import re
 
-from views.forms import LoginForm
+from utils.forms import LoginForm
 
 mod = Blueprint("login", __name__)
 
